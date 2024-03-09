@@ -3,9 +3,9 @@ import React from "react";
 function Navbar(){
     return(
         <nav id="navtab">
-            <a href="#" onClick={"loadHomePage()"}>Home</a>
-            <a href="#" onClick={"loadAboutPage()"}>About</a>
-            <a href="#" onClick={"loadContactPage()"}>Contact</a>
+            <a href="#root">Home</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
         </nav>
     );
 }

@@ -61,3 +61,14 @@ nav {
     color: #f4f4f4;
     text-shadow: #000000;
   }
+
+/*description*/
+#description{
+  color: #f4f4f4;
+  text-shadow: #000000;
+}
+#description img{
+  width: 50%;
+  border-radius: 10%;
+}
+
