@@ -6,7 +6,7 @@ function Home() {
     const [tours, setTours] = useState([]);
 
     useEffect(() => {
-        axios.get('http://93.177.172.105:8080/tours/tour')
+        axios.get('http://localhost:8080/tours/tour')
             .then(response => {
                 const toursWithImages = response.data.tours.map(tour => {
                     const byteCharacters = atob(tour.imageData);
@@ -18,10 +18,10 @@ function Home() {
     }, []);
 
     return (
-        <div id='home' className='tab-pane fade show active'>
+        <div id='home' className='tab-pane tab fade show active'>
             <div id="tours">
                 {tours && (
-                    <div>
+                    <div id="toursList">
                         {tours.map(tour => (
                             <div key={tour.name} className="tour">
                                 <div className="header">

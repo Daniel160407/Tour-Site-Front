@@ -11,7 +11,7 @@ function LogIn(){
                 email: document.getElementById('email').value,
                 password: document.getElementById('password').value
             }
-            axios.post('http://93.177.172.105:8080/tours/adminpanel/login', admin)
+            axios.post('http://localhost:8080/tours/adminpanel/login', admin)
             .then(response => {
                 if(response.status===200){
                     root.render(

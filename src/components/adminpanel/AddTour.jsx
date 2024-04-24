@@ -22,7 +22,7 @@ function AddTour() {
         formData.append('direction', direction);
         formData.append('image', image);
 
-        axios.post('http://93.177.172.105:8080/tours/adminpanel', formData, {
+        axios.post('http://localhost:8080/tours/adminpanel', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
