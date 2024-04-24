@@ -1,0 +1,21 @@
+@import '../colors.scss';
+
+#navbar {
+    background-color: $navbar-background-color;
+    margin-left: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.admin-nav-tabs {
+    align-content: start;
+    list-style-type: none;
+    margin: 10px;
+    padding-left: 0;
+    display: grid;
+    gap: 5px;
+}
+
+.nav-item {
+    background-color: $tours-background-color;
+}
