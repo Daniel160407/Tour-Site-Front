@@ -1,0 +1,55 @@
+#tour {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+    width: 100%;
+  
+    img{
+        width: 20px;
+    }
+
+    h1 {
+      font-size: 2em;
+      margin-bottom: 10px;
+    }
+  
+    h2 {
+      font-size: 1.5em;
+      margin-bottom: 5px;
+    }
+  
+    h3 {
+      font-size: 1.2em;
+      margin-bottom: 5px;
+    }
+  
+    p {
+      line-height: 1.5;
+      margin-bottom: 15px;
+    }
+  
+    #name {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+  
+    #direction, #description, #history, #price {
+      margin-bottom: 30px;
+    }
+  
+    #direction, #history {
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 20px;
+      margin-bottom: 20px;
+    }
+  
+    #price {
+      font-weight: bold;
+      color: #007bff;
+    }
+  }
+  

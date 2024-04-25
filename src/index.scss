@@ -1,5 +1,11 @@
 @import './style/colors.scss';
-
 body {
-    background-color: $background-color;
-}
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-image: url('https://scontent.ftbs5-2.fna.fbcdn.net/v/t39.30808-6/424612049_7160921010696373_3291945889446529411_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_ohc=KbK62h4jbVwAb40X7Hj&_nc_ht=scontent.ftbs5-2.fna&oh=00_AfA43N3dn-Or6755L4WqWHDzdydioZZEt9FCB46tc8fIRQ&oe=66301884');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+  }
+  

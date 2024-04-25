@@ -6,6 +6,8 @@ function AddTour() {
     const [title, setTitle] = useState('');
     const [direction, setDirection] = useState('');
     const [description, setDescription] = useState('');
+    const [history, setHistory] = useState('');
+    const [price, setPrice] = useState('');
     const [image, setImage] = useState(null);
 
     function saveTour(event) {
@@ -20,6 +22,8 @@ function AddTour() {
         formData.append('title', title);
         formData.append('description', description);
         formData.append('direction', direction);
+        formData.append('history', history);
+        formData.append('price', price);
         formData.append('image', image);
 
         axios.post('http://localhost:8080/tours/adminpanel', formData, {
@@ -33,6 +37,11 @@ function AddTour() {
         .catch(error => {
             console.error('Error saving tour:', error);
         });
+
+        const inputs = document.getElementsByClassName('inputs');
+        for (let i = 0; i < inputs.length; i++) {
+            inputs[i].value = '';
+        }
     }
 
     function handleImageChange(event) {
@@ -43,10 +52,12 @@ function AddTour() {
         <div id='Tours' className='tab-pane fade show active'>
             <h1>Add Tour</h1>
             <form onSubmit={saveTour}>
-                <input type="text" placeholder="Tour title" value={title} onChange={(e) => setTitle(e.target.value)} />
-                <input type="text" placeholder="Tour direction" value={direction} onChange={(e) => setDirection(e.target.value)} />
-                <textarea placeholder="Tour description" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
-                <input type='file' onChange={handleImageChange}></input>
+                <input className='inputs' type="text" placeholder="Tour title" value={title} onChange={(e) => setTitle(e.target.value)} />
+                <input className='inputs' type="text" placeholder="Tour direction" value={direction} onChange={(e) => setDirection(e.target.value)} />
+                <textarea className='inputs' placeholder="Tour description" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
+                <textarea className='inputs' placeholder='Tour history' value={history} onChange={(e) => setHistory(e.target.value)}></textarea>
+                <input className='inputs' type='text' placeholder='Tour prices' value={price} onChange={(e) => setPrice(e.target.value)}></input>
+                <input className='inputs' type='file' onChange={handleImageChange}></input>
                 <input type='submit' value='Save'></input>
             </form>
         </div>
