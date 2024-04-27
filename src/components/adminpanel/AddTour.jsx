@@ -10,7 +10,7 @@ function AddTour() {
     const [history, setHistory] = useState('');
     const [price, setPrice] = useState('');
     const [image, setImage] = useState(null);
-    const [addNewTour, setAddNewTour] = useState(false);
+    const [addNewTour, setAddNewTour] = useState(true);
     
     function saveTour(event) {
         event.preventDefault();
@@ -44,6 +44,8 @@ function AddTour() {
         for (let i = 0; i < inputs.length; i++) {
             inputs[i].value = '';
         }
+
+        setAddNewTour(false);
     }
 
     function handleImageChange(event) {
@@ -53,12 +55,15 @@ function AddTour() {
     return (
         <>
         {!addNewTour && (
-            <div className='tab-pane fade show active'>
+            <>
                 <Home adminMode={true}/>
-            </div>
+            </>
         )}
         {addNewTour && (
             <div id='tours'>
+            <img id='arrow' src='/svg/arrow.svg' onClick={() => {
+                setAddNewTour(false)
+            }}></img>
             <h1>Add Tour</h1>
             <form onSubmit={saveTour}>
                 <input className='inputs' type="text" placeholder="Tour title" value={title} onChange={(e) => setTitle(e.target.value)} />

@@ -3,11 +3,13 @@ import axios from "axios";
 import '../style/home.scss';
 import Tour from "./Tour";
 import EditTourForm from "./adminpanel/EditTourForm";
+import AddTour from "./adminpanel/AddTour";
 
 function Home({ adminMode }) {
     const [tours, setTours] = useState([]);
     const [selectedTour, setSelectedTour] = useState(null);
-    const [showTour, setShowTour] = useState(false);
+    const [showTour, setShowTour] = useState(true);
+    const [addTour, setAddTour] = useState(false);
 
     useEffect(() => {
         axios.get('http://localhost:8080/tours/tour')
@@ -25,12 +27,20 @@ function Home({ adminMode }) {
         console.log(adminMode);
         setSelectedTour(tour);
         setTours([]);
-        setShowTour(true);
+        setShowTour(false);
+    }
+
+    function addNewTour(){
+        setAddTour(true);
+        setShowTour(false);
     }
 
     return (
         <>
-            {!showTour && (
+            {showTour && adminMode && (
+                <button id="add" type="btn" onClick={() => {addNewTour()}}>Add Tour</button>
+            )}
+            {showTour && (
                 <div id='home' className='tab-pane tab fade show active'>
                     <div id="tours">
                         {tours && (
@@ -60,6 +70,9 @@ function Home({ adminMode }) {
                         )}
                     </div>
                 </div>
+            )}
+            {!showTour && addTour && (
+                <AddTour/>
             )}
             {selectedTour && !adminMode && (
                 <Tour tour={selectedTour} />

@@ -1,9 +1,9 @@
-import AddTour from "./AddTour";
+import Home from "../Home";
 
 function Content(){
     return(
         <div className="tab-content">
-            <AddTour/>
+            <Home adminMode={true}/>
         </div>
     );
     
