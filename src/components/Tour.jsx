@@ -37,7 +37,7 @@ function Tour({tour}) {
             )}
 
             {returnPage && (
-                <Home/>
+                <Home adminMode={false}/>
             )}
         </>
 

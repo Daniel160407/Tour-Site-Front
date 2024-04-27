@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import '/src/style/adminpanel/addTour.scss';
+import Home from '../Home';
 
 function AddTour() {
     const [title, setTitle] = useState('');
@@ -9,7 +10,8 @@ function AddTour() {
     const [history, setHistory] = useState('');
     const [price, setPrice] = useState('');
     const [image, setImage] = useState(null);
-
+    const [addNewTour, setAddNewTour] = useState(false);
+    
     function saveTour(event) {
         event.preventDefault();
 
@@ -49,7 +51,14 @@ function AddTour() {
     }
 
     return (
-        <div id='Tours' className='tab-pane fade show active'>
+        <>
+        {!addNewTour && (
+            <div className='tab-pane fade show active'>
+                <Home adminMode={true}/>
+            </div>
+        )}
+        {addNewTour && (
+            <div id='tours'>
             <h1>Add Tour</h1>
             <form onSubmit={saveTour}>
                 <input className='inputs' type="text" placeholder="Tour title" value={title} onChange={(e) => setTitle(e.target.value)} />
@@ -61,6 +70,9 @@ function AddTour() {
                 <input type='submit' value='Save'></input>
             </form>
         </div>
+        )}
+        </>
+        
     );
 }
 

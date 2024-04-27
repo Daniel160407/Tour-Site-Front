@@ -4,7 +4,7 @@ import Home from './Home';
 function Tabs(){
     return(
         <div className="tab-content">
-            <Home/>
+            <Home adminMode={false}/>
         </div>
     );
 }
