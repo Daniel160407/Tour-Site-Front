@@ -1,5 +1,5 @@
 import '../style/tabs.scss';
-import Home from './Home';
+import Home from './tour/Home';
 
 function Tabs(){
     return(

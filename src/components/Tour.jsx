@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import '../style/tour.scss';
-import Home from './Home';
+import Home from './tour/Home';
 
 function Tour({tour}) {
     const [returnPage, setReturnPage] = useState(null);

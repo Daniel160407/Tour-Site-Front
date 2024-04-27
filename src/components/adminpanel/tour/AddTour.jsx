@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import '/src/style/adminpanel/addTour.scss';
-import Home from '../Home';
+import '/src/style/adminpanel/tour/addTour.scss';
+import Home from '../../tour/Home.jsx';
 
 function AddTour() {
     const [title, setTitle] = useState('');

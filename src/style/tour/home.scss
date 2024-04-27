@@ -33,6 +33,7 @@
   overflow: hidden;
   cursor: pointer;
   transition: transform 0.3s ease;
+  position: relative;
 
   &:hover {
     transform: translateY(-5px);
@@ -74,12 +75,18 @@
     margin-bottom: 20px;
   }
 
-  h3 {
-    font-size: 1.2em;
-    margin: 0;
-    padding: 10px;
-    background-color: #007bff;
-    color: white;
-    border-radius: 0 0 8px 8px;
+  .price {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+
+    h3 {
+      font-size: 1.2em;
+      margin: 0;
+      padding: 10px;
+      background-color: #007bff;
+      color: white;
+      border-radius: 0 0 8px 8px;
+    }
   }
 }

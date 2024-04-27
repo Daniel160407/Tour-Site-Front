@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import axios from "axios";
-import '/src/style/adminpanel/EditTourForm.scss';
-import Home from "../Home.jsx";
+import '/src/style/adminpanel/tour/EditTourForm.scss';
+import Home from "../../tour/Home.jsx";
 
 function EditTourForm({tour}) {
     const [editedTour, setEditedTour] = useState({...tour});

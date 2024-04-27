@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import '../style/home.scss';
-import Tour from "./Tour";
-import EditTourForm from "./adminpanel/EditTourForm";
-import AddTour from "./adminpanel/AddTour";
+import '../../style/tour/home.scss';
+import Tour from "../Tour";
+import EditTourForm from "../adminpanel/tour/EditTourForm";
+import AddTour from "../adminpanel/tour/AddTour";
 
 function Home({ adminMode }) {
     const [tours, setTours] = useState([]);
@@ -24,7 +24,6 @@ function Home({ adminMode }) {
     }, []);
 
     function openTour(tour) {
-        console.log(adminMode);
         setSelectedTour(tour);
         setTours([]);
         setShowTour(false);
@@ -61,7 +60,7 @@ function Home({ adminMode }) {
                                         <div className="description">
                                             <p>{tour.description}</p>
                                         </div>
-                                        <div>
+                                        <div className="price">
                                             <h3>From: {tour.price}</h3>
                                         </div>
                                     </div>

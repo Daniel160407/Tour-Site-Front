@@ -1,4 +1,4 @@
-import '../Home.jsx';
+import '../../Home.jsx';
 
 function EditTours(){
     return(
