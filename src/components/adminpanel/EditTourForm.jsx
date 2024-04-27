@@ -20,6 +20,10 @@ function EditTourForm({tour}) {
         axios.put(`http://localhost:8080/tours/adminpanel`, editedTour);
     };
 
+    function deleteTour() {
+        axios.delete(`http://localhost:8080/tours/adminpanel?name=${editedTour.name}`);
+    }
+
     return (
         <>
         {!returnPage && (
@@ -41,6 +45,7 @@ function EditTourForm({tour}) {
                 <input type="text" name="price" value={editedTour.price} onChange={handleChange} required/>
                 <button type="submit">Save</button>
             </form>
+            <button type="btn" onClick={() => deleteTour()}>Delete Tour</button>
         </div>
         )}
         {returnPage && (
