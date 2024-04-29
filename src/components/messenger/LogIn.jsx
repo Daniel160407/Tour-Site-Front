@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "/src/style/messenger/login.scss";
 
-function LogIn({sid, onLogin}) {
+function LogIn({sid, onLogin, setGlobalEmail}) {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -21,6 +21,8 @@ function LogIn({sid, onLogin}) {
             // Call the onLogin callback after successful login
             onLogin();
         });
+        
+        setGlobalEmail(email);
     }
 
     return (

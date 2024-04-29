@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import LogIn from "./LogIn";
+import axios from "axios";
 
 function ChatEndPoint() {
     const [showLogin, setShowLogin] = useState(false);
     const [sid, setSid] = useState('');
+    const [email, setEmail] = useState('');
     const [messages, setMessages] = useState([]);
     const [messageInput, setMessageInput] = useState('');
     const [socket, setSocket] = useState(null);
@@ -30,6 +32,8 @@ function ChatEndPoint() {
 
     const sendMessage = () => {
         const message = {
+            senderEmail: email,
+            receiverEmail: '',
             sender: sid,
             receiver: 'Admin',
             message: messageInput
@@ -41,7 +45,7 @@ function ChatEndPoint() {
     };
 
     const handleKeyPress = (event) => {
-        if(event.target.value === 'Enter'){
+        if(event.key === 'Enter'){
             sendMessage();
         }
     }
@@ -49,7 +53,7 @@ function ChatEndPoint() {
     return (
         <>
             {showLogin && (
-                <LogIn sid={sid} onLogin={() => setShowLogin(false)} />
+                <LogIn sid={sid} onLogin={() => setShowLogin(false)} setGlobalEmail={setEmail} />
             )}
             {!showLogin && (
                 <div>

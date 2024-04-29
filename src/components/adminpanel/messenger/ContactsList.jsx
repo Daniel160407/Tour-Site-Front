@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import '/src/style/adminpanel/messenger/contactsList.scss';
 
-function ContactsList() {
+function ContactsList({setContact}) {
     const [contacts, setContacts] = useState([]);
 
     useEffect(() => {
@@ -15,7 +15,7 @@ function ContactsList() {
     return (
         <div className="contacts-list">
             {contacts.map(contact => (
-                <div className='contact' key={contact.sid}>
+                <div className='contact' key={contact.name} onClick={() => setContact(contact)}>
                     <p>{contact.name}</p>
                 </div>
             ))}
