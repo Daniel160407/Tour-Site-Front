@@ -1,15 +1,40 @@
 @import './style/colors.scss';
+html {
+  height: 100%;
+}
 body {
     margin: 0;
     padding: 0;
-    background-image: url('https://scontent.ftbs5-2.fna.fbcdn.net/v/t39.30808-6/424612049_7160921010696373_3291945889446529411_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_ohc=KbK62h4jbVwAb40X7Hj&_nc_ht=scontent.ftbs5-2.fna&oh=00_AfA43N3dn-Or6755L4WqWHDzdydioZZEt9FCB46tc8fIRQ&oe=66301884');
+    background-image: url('https://scontent.ftbs5-2.fna.fbcdn.net/v/t31.18172-8/18491592_1189208257867708_4996634175348557615_o.jpg?_nc_cat=108&ccb=1-7&_nc_sid=5f2048&_nc_ohc=RWjruv0gUlMQ7kNvgFpRIn-&_nc_ht=scontent.ftbs5-2.fna&oh=00_AfDxiyJ1hAXe1nigxlllLkkY5HHZffcTn7zJrQWA9jBoIw&oe=6654CC6D');
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
     font-family: Prompt, sans-serif;
+    height: 100%;
   }
   
 @font-face {
   font-family: Prompt;
   src: url('fonts/Prompt-Regular.ttf') format('truetype');
+}
+
+#root {
+  height: 100%;
+}
+
+footer {
+  background-color: #333;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  font-size: 14px;
+
+  a {
+    color: white;
+    text-decoration: underline;
+  }
+
+  a:hover {
+    text-decoration: none;
+  }
 }

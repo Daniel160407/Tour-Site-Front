@@ -1,0 +1,30 @@
+.contacts-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.contact {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    width: 300px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.contact:hover {
+    transform: scale(1.05);
+}
+
+.contact p {
+    margin: 0;
+    padding: 5px;
+}
+
+.contact p:first-child {
+    font-weight: bold;
+    font-size: 1.2em;
+    color: #333;
+}

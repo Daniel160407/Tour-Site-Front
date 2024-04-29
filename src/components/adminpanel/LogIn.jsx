@@ -56,7 +56,7 @@ function LogIn() {
                 <h1>Log In</h1><br/>
                 <input id='email' type='email' placeholder='Write your email' onKeyPress={handleKeyPress}></input>
                 <input id='password' type='password' placeholder='Write your password' onKeyPress={handleKeyPress}></input>
-                <label for={'checkbox'}>Remember me</label> <input id='checkbox' type='checkbox'></input>
+                <label htmlFor={'checkbox'}>Remember me</label> <input id='checkbox' type='checkbox'></input>
             </div>
         </div>
     );
