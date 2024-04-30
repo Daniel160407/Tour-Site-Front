@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import '/src/style/adminpanel/login.scss';
@@ -7,6 +7,8 @@ import Content from './Content';
 import Navbar from '../Navbar';
 
 function LogIn() {
+    const [showError, setShowError] = useState(false);
+
     const history = useHistory();
 
     useEffect(() => {
@@ -42,11 +44,11 @@ function LogIn() {
                             <Content/>
                         </>
                     );
-                    document.getElementById('root').style='display: flex; height: 700px; justify-content: center; gap: 50px;';
-                } else {
-                    //TODO: add error message
                 }
             });
+
+            setShowError(true);
+            console.log(showError);
         }
     }
 
@@ -56,6 +58,9 @@ function LogIn() {
                 <h1>Log In</h1><br/>
                 <input id='email' type='email' placeholder='Write your email' onKeyPress={handleKeyPress}></input>
                 <input id='password' type='password' placeholder='Write your password' onKeyPress={handleKeyPress}></input>
+                {showError && (
+                    <p className='errorMessage'>Invalid email or password!</p>
+                )}
                 <label htmlFor={'checkbox'}>Remember me</label> <input id='checkbox' type='checkbox'></input>
             </div>
         </div>

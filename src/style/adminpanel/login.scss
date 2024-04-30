@@ -19,6 +19,11 @@
         font-weight: bold;
         color: #333;
       }
+
+      .errorMessage {
+        font-size: small;
+        color: red;
+      }
   
       input[type="email"],
       input[type="password"] {

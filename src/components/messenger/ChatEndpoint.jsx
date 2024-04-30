@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import LogIn from "./LogIn";
 import '/src/style/messenger/chatEndPoint.scss';
+import axios from "axios";
 
 function ChatEndPoint() {
     const [showLogin, setShowLogin] = useState(false);
@@ -28,6 +29,20 @@ function ChatEndPoint() {
                 setMessages(prevmessages => [...prevmessages, message])
             }
         }
+
+        axios.get(`http://localhost:8080/tours/adminpanel/messenger/messages?email=${email}`)
+            .then(response => {
+                const messages = response.data;
+                setMessages([]);
+                for(let i=0; i<messages.length; i++){
+                    if(messages[i].senderEmail !== ''){
+                        messages[i].received = false;
+                    }else{
+                        messages[i].received = true;
+                    }
+                    setMessages(prevMessages => [...prevMessages, messages[i]]);
+                }
+            });
     }, []);
 
     const sendMessage = () => {

@@ -1,6 +1,24 @@
 @import './colors.scss';
 
-.nav-tabs {
-    margin-bottom: 20px;
-    background-color: $navbar-background-color;
-}
+.navbar {
+    .navbar-brand {
+        justify-self: center;
+        margin-left: auto;
+        margin-right: auto;
+
+        .title {
+            margin-right: 200px;
+        }
+    }
+  
+    .nav-item {
+      margin-right: 10px;
+    }
+  
+    .nav-tabs {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 0;
+    }
+  }
+  

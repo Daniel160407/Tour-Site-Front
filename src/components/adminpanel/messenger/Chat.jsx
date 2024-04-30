@@ -42,9 +42,22 @@ function Chat({contact}) {
     }, [sid]);
 
     useEffect(() => {
-        console.log(contact);
         if (contact !== null) {
             setShowChat(true);
+            axios.get(`http://localhost:8080/tours/adminpanel/messenger/messages?email=${contact.email}`)
+            .then(response => {
+                const messages = response.data;
+                console.log(messages);
+                setMessages([]);
+                for(let i=0; i<messages.length; i++){
+                    if(messages[i].senderEmail === ''){
+                        messages[i].received = false;
+                    }else{
+                        messages[i].received = true;
+                    }
+                    setMessages(prevMessages => [...prevMessages, messages[i]]);
+                }
+            });
         }
     }, [contact]);
 
@@ -58,12 +71,12 @@ function Chat({contact}) {
         };
 
 
-        setMessages([...messages, message]);
         setMessageInput('');
         document.getElementById('messageInput').value = '';
         socket.send(JSON.stringify(message));
 
         message.received = false;
+        setMessages(prevMessages => [...prevMessages, message]);
     };
 
     const handleKeyPress = (event) => {
@@ -87,7 +100,7 @@ function Chat({contact}) {
                                         <p>{message.message}</p>
                                     </div>
                                 </div>
-                            ) : contact.email === message.senderEmail && !message.received ? (
+                            ) : !message.received ? (
                                 <div className="sent" key={index}>
                                     <div className="message">
                                         <p>{message.message}</p>
