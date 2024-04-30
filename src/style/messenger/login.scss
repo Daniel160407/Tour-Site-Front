@@ -1,11 +1,12 @@
 .log-in-container {
     margin: 0 auto;
     max-width: 400px;
+    height: 250px;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    background-color: #f9f9f9;
+    background-color: rgba(255, 255, 255, 0.5);
 }
 
 .log-in-input {
@@ -28,8 +29,8 @@
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s;
-}
 
-.log-in-button:hover {
-    background-color: #0056b3;
+    &:hover {
+        background-color: #0056b3;
+    }
 }

@@ -39,8 +39,8 @@ function Home({ adminMode }) {
             {showTour && (
                 <div id='home' className='tab-pane tab fade show active'>
                     {showTour && adminMode && (
-                <button id="add" type="btn" onClick={() => {addNewTour()}}>Add Tour</button>
-            )}
+                        <button id="add" type="btn" onClick={() => {addNewTour()}}>Add Tour</button>
+                    )}
                     <div id="tours">
                         {tours && (
                             <div id="toursList">

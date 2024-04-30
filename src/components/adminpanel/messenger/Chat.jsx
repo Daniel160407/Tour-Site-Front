@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import '/src/style/adminpanel/messenger/chat.scss';
 
@@ -13,37 +13,37 @@ function Chat({contact}) {
         const newSocket = new WebSocket('ws://localhost:8080/messenger');
         setSocket(newSocket);
 
-        newSocket.onmessage = function(event) {
-          const message = JSON.parse(event.data);
-          console.log(message);
-          if (message.sender === 'server') {
-            setSid(message.message);
-          } else {
-            message.received = true;
-            setMessages(prevMessages => [...prevMessages, message]);
-          }
+        newSocket.onmessage = function (event) {
+            const message = JSON.parse(event.data);
+            console.log(message);
+            if (message.sender === 'server') {
+                setSid(message.message);
+            } else {
+                message.received = true;
+                setMessages(prevMessages => [...prevMessages, message]);
+            }
         };
-      }, []);
-      
-      useEffect(() => {
-        if (sid!== null) {
-          const user = {
-            name: 'Admin',
-            email: '',
-            password: '',
-            sid: sid
-          };
-      
-          axios.post('http://localhost:8080/tours/messenger/login', user)
-           .then(response => {
-              console.log(response.data);
-            });
+    }, []);
+
+    useEffect(() => {
+        if (sid !== null) {
+            const user = {
+                name: 'Admin',
+                email: '',
+                password: '',
+                sid: sid
+            };
+
+            axios.post('http://localhost:8080/tours/messenger/login', user)
+                .then(response => {
+                    console.log(response.data);
+                });
         }
-      }, [sid]);
-    
+    }, [sid]);
+
     useEffect(() => {
         console.log(contact);
-        if(contact!==null){
+        if (contact !== null) {
             setShowChat(true);
         }
     }, [contact]);
@@ -57,14 +57,13 @@ function Chat({contact}) {
             message: messageInput
         };
 
-        
+
         setMessages([...messages, message]);
         setMessageInput('');
-        document.getElementById('messageInput').value='';
+        document.getElementById('messageInput').value = '';
         socket.send(JSON.stringify(message));
 
         message.received = false;
-        // Send newMessage to server
     };
 
     const handleKeyPress = (event) => {
@@ -75,31 +74,42 @@ function Chat({contact}) {
 
     return (
         <>
-        {showChat && (
-            <div className="chat-container">
-            <div>
-                <h1>{contact.name}</h1>
-            </div>
-            <div className='messages-container'>
-                {messages.map((message, index) => (
-                    <div className='message' key={index}>
-                        <h3>{message.message}</h3>
+            {showChat && (
+                <div className="chat-container">
+                    <div className='name'>
+                        <h1>{contact.name}</h1>
                     </div>
-                ))}
-            </div>
-            <div>
-                <input 
-                id='messageInput' 
-                type='text' 
-                placeholder='Tipe something' 
-                onChange={(e) => setMessageInput(e.target.value)}
-                onKeyPress={handleKeyPress}></input>
-            </div>
-        </div>
-        )}
-        
+                    <div className='messages-container'>
+                        {messages.map((message, index) => (
+                            contact.email === message.senderEmail && message.received ? (
+                                <div className="received" key={index}>
+                                    <div className="message">
+                                        <p>{message.message}</p>
+                                    </div>
+                                </div>
+                            ) : contact.email === message.senderEmail && !message.received ? (
+                                <div className="sent" key={index}>
+                                    <div className="message">
+                                        <p>{message.message}</p>
+                                    </div>
+                                </div>
+                            ) : null
+                        ))}
+
+                    </div>
+                    <div>
+                        <input
+                            id='messageInput'
+                            type='text'
+                            placeholder='Tipe something'
+                            onChange={(e) => setMessageInput(e.target.value)}
+                            onKeyPress={handleKeyPress}></input>
+                    </div>
+                </div>
+            )}
+
         </>
-        
+
     );
 }
 

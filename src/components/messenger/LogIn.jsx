@@ -18,7 +18,6 @@ function LogIn({sid, onLogin, setGlobalEmail}) {
         axios.post('http://localhost:8080/tours/messenger/login', user)
         .then(response => {
             console.log(response.data);
-            // Call the onLogin callback after successful login
             onLogin();
         });
         

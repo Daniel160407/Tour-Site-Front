@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import LogIn from "./LogIn";
-import axios from "axios";
+import '/src/style/messenger/chatEndPoint.scss';
 
 function ChatEndPoint() {
     const [showLogin, setShowLogin] = useState(false);
@@ -14,11 +14,11 @@ function ChatEndPoint() {
         const newSocket = new WebSocket('ws://localhost:8080/messenger');
         setSocket(newSocket);
 
-        newSocket.onopen = function(){
+        newSocket.onopen = function () {
             setShowLogin(true);
         }
 
-        newSocket.onmessage = function(event){
+        newSocket.onmessage = function (event) {
             const message = JSON.parse(event.data);
             console.log(message);
             if (message.sender === 'server') {
@@ -38,47 +38,58 @@ function ChatEndPoint() {
             receiver: 'Admin',
             message: messageInput
         };
+        
+        socket.send(JSON.stringify(message));
+        
+        message.received = false;
         setMessages(prevmessages => [...prevmessages, message]);
         setMessageInput('');
-
-        socket.send(JSON.stringify(message));
+        document.getElementById('messageInput').value='';
     };
 
     const handleKeyPress = (event) => {
-        if(event.key === 'Enter'){
+        if (event.key === 'Enter') {
             sendMessage();
         }
     }
-    
+
     return (
         <>
             {showLogin && (
-                <LogIn sid={sid} onLogin={() => setShowLogin(false)} setGlobalEmail={setEmail} />
+                <LogIn sid={sid} onLogin={() => setShowLogin(false)} setGlobalEmail={setEmail}/>
             )}
             {!showLogin && (
-                <div>
-                <div>
-                    {messages.map((msg, index) => (
-                        <div key={index}>
-                            <p>{msg.message}</p>
-                        </div>
-                    ))}
+                <div className="chat-container">
+                    <div className='messages-container'>
+                        {messages.map((msg, index) => (
+                            msg.received && (
+                                <div className="received" key={index}>
+                                    <div className="message">
+                                        <p>{msg.message}</p>
+                                    </div>
+                                </div>
+                            ) || !msg.received && (
+                                <div className="sent" key={index}>
+                                    <div className="message">
+                                        <p>{msg.message}</p>
+                                    </div>
+                                </div>
+                            )
+                        ))}
+                    </div>
+                    <div>
+                        <input
+                            id='messageInput'
+                            type='text'
+                            placeholder='Tipe something'
+                            onChange={(e) => setMessageInput(e.target.value)}
+                            onKeyPress={handleKeyPress}></input>
+                    </div>
                 </div>
-                <div>
-                    <input 
-                        type="text" 
-                        value={messageInput} 
-                        onChange={(e) => setMessageInput(e.target.value)} 
-                        placeholder="Type your message..."
-                        onKeyPress={handleKeyPress} 
-                    />
-                    <button onClick={sendMessage}>Send</button>
-                </div>
-            </div>
             )}
-            
+
         </>
-        
+
     );
 }
 
