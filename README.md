@@ -1,8 +1,21 @@
-# React + Vite
+# Georgia & Tours
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Description
+-----------
+This is my first real project's frontend side. Here you can find the tour you want and order it. You can also connect to the Admin for more details.
 
-Currently, two official plugins are available:
+Technologies Used
+-----------------
+- **JavaScript**: Core language for frontend interactivity.
+- **React.js**: Building user interfaces and managing application state.
+- **Sass**: Styling the frontend for an engaging user experience.
+- **HTML**: Structuring the content of the frontend.
+- **Networking**: Handling data exchange between the frontend and backend.
+- **WebSocket**: Enabling real-time communication for dynamic updates.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+What I Learned
+--------------
+Working on the frontend of Georgia & Tours has been a rewarding experience. Here are some key takeaways:
+- Using React.js to create dynamic and responsive user interfaces.
+- Leveraging Sass for efficient and maintainable styling.
+- Gaining insight into networking concepts and WebSocket for real-time updates.
