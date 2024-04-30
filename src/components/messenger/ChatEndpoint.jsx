@@ -35,11 +35,7 @@ function ChatEndPoint() {
                 const messages = response.data;
                 setMessages([]);
                 for(let i=0; i<messages.length; i++){
-                    if(messages[i].senderEmail !== ''){
-                        messages[i].received = false;
-                    }else{
-                        messages[i].received = true;
-                    }
+                    messages[i].received = messages[i].senderEmail === '';
                     setMessages(prevMessages => [...prevMessages, messages[i]]);
                 }
             });

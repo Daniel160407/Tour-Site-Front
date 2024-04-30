@@ -49,7 +49,7 @@ function LogIn({sid, onLogin, setGlobalEmail}) {
             />
             <button className="log-in-button" onClick={save}>Save</button>
             <div className="socialNetwork">
-                <a href="https://www.facebook.com/goga.abulashvili" target="_blank"><img src="/svg/facebook.svg"></img> </a>
+                <a href="https://www.facebook.com/goga.abulashvili" target="_blank"><img src="/svg/facebook.svg" alt={'facebook'}></img> </a>
             </div>
         </div>
     );

@@ -10,7 +10,7 @@ function Tour({tour}) {
         <>
             {showTour && (
                 <div id='tour'>
-                    <img src='/svg/arrow.svg' onClick={() => {
+                    <img src='/svg/arrow.svg' alt={'Go back'} onClick={() => {
                         setReturnPage('return')
                         setShowTour(false);
                     }}></img>
