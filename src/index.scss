@@ -1,7 +1,9 @@
 @import './style/colors.scss';
+
 html {
   height: 100%;
 }
+
 body {
     margin: 0;
     padding: 0;
@@ -10,7 +12,7 @@ body {
     background-repeat: no-repeat;
     background-attachment: fixed;
     font-family: Prompt, sans-serif;
-    height: 100%;
+    min-height: 100vh;
   }
   
 @font-face {
@@ -28,7 +30,6 @@ footer {
   padding: 20px;
   text-align: center;
   font-size: 14px;
-
 
   a {
     color: white;
