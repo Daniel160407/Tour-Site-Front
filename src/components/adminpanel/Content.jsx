@@ -4,7 +4,7 @@ import Messenger from "./messenger/Messenger";
 function Content(){
     return(
         <div className="tab-content">
-            <Home adminMode={true}/>
+            <Home adminMode={true} selectedLanguage={'ENG'}/>
             <Messenger adminMode={true}/>
         </div>
     );

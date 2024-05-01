@@ -15,9 +15,11 @@ function Messenger({adminMode}){
     
 
     return(
-        <div id='contact' className='tab-pane tab fade' style={{display: display}}>
-            <ContactsList setContact={setContact}/>
-            <Chat contact={contact}/>
+        <div id='contact' className='tab-pane tab fade'>
+            <div id="chat" style={{display: display}}>
+                <ContactsList setContact={setContact}/>
+                <Chat contact={contact}/>
+            </div>
         </div>
     );
 }

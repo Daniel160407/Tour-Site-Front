@@ -57,7 +57,7 @@ function AddTour() {
             </>
         )}
         {addNewTour && (
-            <div id='tours'>
+            <div id='addTours'>
             <img id='arrow' src='/svg/arrow.svg' onClick={() => {
                 setAddNewTour(false)
             }}></img>

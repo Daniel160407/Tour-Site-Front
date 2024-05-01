@@ -10,7 +10,7 @@ function Home({adminMode}) {
     const [selectedTour, setSelectedTour] = useState(null);
     const [showTour, setShowTour] = useState(true);
     const [addTour, setAddTour] = useState(false);
-    const [language, setLanguage] = useState(document.getElementById('language').value);
+    const [language, setLanguage] = useState('ENG');
 
     useEffect(() => {
         if (language) {
