@@ -34,7 +34,7 @@ function LogIn() {
             .then(response => {
                 if(response.status === 200){
                     if (document.getElementById('checkbox').checked) {
-                        Cookies.set('isLoggedIn', 'true', { expires: 7 }); // Set cookie to expire in 7 days
+                        Cookies.set('isLoggedIn', 'true', { expires: 1 });
                     } else {
                         Cookies.set('isLoggedIn', 'false');
                     }
