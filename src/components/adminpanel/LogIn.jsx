@@ -49,7 +49,6 @@ function LogIn() {
             });
 
             setShowError(true);
-            console.log(showError);
         }
     }
 

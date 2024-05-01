@@ -1,27 +1,33 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import '../../style/tour/home.scss';
 import Tour from "../Tour";
 import EditTourForm from "../adminpanel/tour/EditTourForm";
 import AddTour from "../adminpanel/tour/AddTour";
 
-function Home({ adminMode }) {
+function Home({adminMode}) {
     const [tours, setTours] = useState([]);
     const [selectedTour, setSelectedTour] = useState(null);
     const [showTour, setShowTour] = useState(true);
     const [addTour, setAddTour] = useState(false);
+    const [language, setLanguage] = useState('ENG');
 
     useEffect(() => {
-        axios.get('http://localhost:8080/tours/tour')
-            .then(response => {
-                const toursWithImages = response.data.tours.map(tour => {
-                    const byteCharacters = atob(tour.imageData);
-                    const base64String = btoa(byteCharacters);
-                    return { ...tour, imageData: base64String };
+        if (language) {
+            axios.get(`http://localhost:8080/tours/tour?language=${language}`)
+                .then(response => {
+                    const toursWithImages = response.data.tours.map(tour => {
+                        const byteCharacters = atob(tour.imageData);
+                        const base64String = btoa(byteCharacters);
+                        return {...tour, imageData: base64String};
+                    });
+                    setTours(toursWithImages);
+                })
+                .catch(error => {
+                    console.error(error);
                 });
-                setTours(toursWithImages);
-            });
-    }, []);
+        }
+    }, [language]);
 
     function openTour(tour) {
         setSelectedTour(tour);
@@ -29,17 +35,28 @@ function Home({ adminMode }) {
         setShowTour(false);
     }
 
-    function addNewTour(){
+    function addNewTour() {
         setAddTour(true);
         setShowTour(false);
     }
+
+    useEffect(() => {
+        const selectElement = document.getElementById('language');
+        const handleLanguageChange = () => {
+            setLanguage(selectElement.value);
+        };
+        selectElement.addEventListener('change', handleLanguageChange);
+        return () => {
+            selectElement.removeEventListener('change', handleLanguageChange);
+        };
+    }, []);
 
     return (
         <>
             {showTour && (
                 <div id='home' className='tab-pane tab fade show active'>
                     {showTour && adminMode && (
-                        <button id="add" type="btn" onClick={() => {addNewTour()}}>Add Tour</button>
+                        <button id="add" type="btn" onClick={addNewTour}>Add Tour</button>
                     )}
                     <div id="tours">
                         {tours && (
@@ -48,7 +65,8 @@ function Home({ adminMode }) {
                                     <div key={tour.name} className="tour" onClick={() => openTour(tour)}>
                                         <div className="header">
                                             <div>
-                                                <img src={`data:image/jpeg;base64,${tour.imageData}`} alt={tour.name}></img>
+                                                <img src={`data:image/jpeg;base64,${tour.imageData}`}
+                                                     alt={tour.name}></img>
                                             </div>
                                             <div className="titleBox">
                                                 <h1 className="title">{tour.name}</h1>
@@ -74,10 +92,10 @@ function Home({ adminMode }) {
                 <AddTour/>
             )}
             {selectedTour && !adminMode && (
-                <Tour tour={selectedTour} />
+                <Tour tour={selectedTour}/>
             )}
             {selectedTour && adminMode && (
-               <EditTourForm tour={selectedTour} />
+                <EditTourForm tour={selectedTour}/>
             )}
         </>
     );

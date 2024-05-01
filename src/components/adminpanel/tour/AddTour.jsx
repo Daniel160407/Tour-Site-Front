@@ -9,16 +9,12 @@ function AddTour() {
     const [description, setDescription] = useState('');
     const [history, setHistory] = useState('');
     const [price, setPrice] = useState('');
+    const [language, setLanguage] = useState('ENG');
     const [image, setImage] = useState(null);
     const [addNewTour, setAddNewTour] = useState(true);
     
     function saveTour(event) {
         event.preventDefault();
-
-        if (!image) {
-            console.error('Please select an image');
-            return;
-        }
 
         const formData = new FormData();
         formData.append('title', title);
@@ -26,6 +22,7 @@ function AddTour() {
         formData.append('direction', direction);
         formData.append('history', history);
         formData.append('price', price);
+        formData.append('language', language);
         formData.append('image', image);
 
         axios.post('http://localhost:8080/tours/adminpanel', formData, {
@@ -71,6 +68,10 @@ function AddTour() {
                 <textarea className='inputs' placeholder="Tour description" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
                 <textarea className='inputs' placeholder='Tour history' value={history} onChange={(e) => setHistory(e.target.value)}></textarea>
                 <input className='inputs' type='text' placeholder='Tour prices' value={price} onChange={(e) => setPrice(e.target.value)}></input>
+                <select id='adminLanguage' onChange={(e) => setLanguage(e.target.value)}>
+                    <option>ENG</option>
+                    <option>RUS</option>
+                </select>
                 <input className='inputs' type='file' onChange={handleImageChange}></input>
                 <input type='submit' value='Save'></input>
             </form>

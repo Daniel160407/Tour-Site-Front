@@ -11,6 +11,12 @@ function Navbar() {
                 <div className='navbar-brand'>
                     <span className="title">Georgia & Tours</span>
                 </div>
+                <div>
+                    <select id='language'>
+                        <option>ENG</option>
+                        <option>RUS</option>
+                    </select>
+                </div>
             </div>
         </nav>
     );

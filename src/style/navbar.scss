@@ -7,7 +7,7 @@
         margin-right: auto;
 
         .title {
-            margin-right: 200px;
+            margin-right: 150px;
         }
     }
   
@@ -22,3 +22,24 @@
     }
   }
   
+  select {
+    padding: 8px 16px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    appearance: none;
+    background-color: #f8f9fa;
+    color: #333;
+    cursor: pointer;
+    outline: none;
+    
+    option {
+    padding: 8px 16px;
+    font-size: 16px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #e9ecef;
+    }
+  }
+}
