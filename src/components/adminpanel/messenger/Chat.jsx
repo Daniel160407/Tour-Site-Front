@@ -15,7 +15,6 @@ function Chat({contact}) {
 
         newSocket.onmessage = function (event) {
             const message = JSON.parse(event.data);
-            console.log(message);
             if (message.sender === 'server') {
                 setSid(message.message);
             } else {
@@ -34,10 +33,7 @@ function Chat({contact}) {
                 sid: sid
             };
 
-            axios.post('http://localhost:8080/tours/messenger/login', user)
-                .then(response => {
-                    console.log(response.data);
-                });
+            axios.post('http://localhost:8080/tours/messenger/login', user);
         }
     }, [sid]);
 
@@ -47,7 +43,6 @@ function Chat({contact}) {
             axios.get(`http://localhost:8080/tours/adminpanel/messenger/messages?email=${contact.email}`)
             .then(response => {
                 const messages = response.data;
-                console.log(messages);
                 setMessages([]);
                 for(let i=0; i<messages.length; i++){
                     messages[i].received = messages[i].senderEmail !== '';

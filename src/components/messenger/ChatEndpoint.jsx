@@ -21,7 +21,6 @@ function ChatEndPoint() {
 
         newSocket.onmessage = function (event) {
             const message = JSON.parse(event.data);
-            console.log(message);
             if (message.sender === 'server') {
                 setSid(message.message);
             } else {

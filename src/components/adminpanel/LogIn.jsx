@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
+import Cookies from 'js-cookie';
 import '/src/style/adminpanel/login.scss';
 import root from '../../script/root';
 import Content from './Content';
@@ -12,7 +13,7 @@ function LogIn() {
     const history = useHistory();
 
     useEffect(() => {
-        const isLoggedIn = localStorage.getItem('isLoggedIn');
+        const isLoggedIn = Cookies.get('isLoggedIn');
         if (isLoggedIn === 'true') {
             root.render(
                 <>
@@ -33,9 +34,9 @@ function LogIn() {
             .then(response => {
                 if(response.status === 200){
                     if (document.getElementById('checkbox').checked) {
-                        localStorage.setItem('isLoggedIn', 'true');
+                        Cookies.set('isLoggedIn', 'true', { expires: 7 }); // Set cookie to expire in 7 days
                     } else {
-                        localStorage.setItem('isLoggedIn', 'false');
+                        Cookies.set('isLoggedIn', 'false');
                     }
                     
                     root.render(

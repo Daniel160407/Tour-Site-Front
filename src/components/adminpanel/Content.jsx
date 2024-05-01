@@ -5,7 +5,7 @@ function Content(){
     return(
         <div className="tab-content">
             <Home adminMode={true}/>
-            <Messenger/>
+            <Messenger adminMode={true}/>
         </div>
     );
     
