@@ -1,4 +1,5 @@
 import ChatEndPoint from "./ChatEndpoint";
+import '../../style/adminpanel/messenger/messenger.scss';
 
 function Messenger(){
     return(

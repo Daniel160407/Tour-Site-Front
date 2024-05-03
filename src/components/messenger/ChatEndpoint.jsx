@@ -4,7 +4,7 @@ import '/src/style/messenger/chatEndPoint.scss';
 import axios from "axios";
 
 function ChatEndPoint() {
-    const [showLogin, setShowLogin] = useState(false);
+    const [showLogin, setShowLogin] = useState(true);
     const [sid, setSid] = useState('');
     const [email, setEmail] = useState('');
     const [messages, setMessages] = useState([]);
@@ -18,6 +18,10 @@ function ChatEndPoint() {
         newSocket.onopen = function () {
             setShowLogin(true);
         }
+
+        newSocket.onerror = function(event) {
+            console.error('WebSocket connection error:', event);
+        };
 
         newSocket.onmessage = function (event) {
             const message = JSON.parse(event.data);

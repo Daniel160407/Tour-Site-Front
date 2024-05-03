@@ -1,9 +1,11 @@
 #contact {
+    gap: 20px;
     height: 90%;
-    width: 100%;
 }
 
 #chat {
+    display: flex;
+    width: 100%;
     height: 100%;
     gap: 20px;
 }

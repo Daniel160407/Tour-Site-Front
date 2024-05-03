@@ -79,7 +79,7 @@ function Chat({contact}) {
     return (
         <>
             {showChat && (
-                <div className="chat-container">
+                <div className="admin-chat-container">
                     <div className='name'>
                         <h1>{contact.name}</h1>
                     </div>

@@ -8,9 +8,9 @@ function App() {
     return (
         <Router>
             <Switch>
-                <Route path="/tours/adminpanel" component={AdminPanel}/>
-                <Route path="/tours" component={Tours}/>
-                <Route component={NotFound}/>
+                <Route path="/tours" component={Tours} />
+                <Route path="/adminpanel" component={AdminPanel} />
+                <Route component={NotFound} />
             </Switch>
         </Router>
     );
