@@ -1,32 +1,31 @@
 .contacts-list {
-    display: flex;
-    flex-direction: column;
-    width: 500px;
-    overflow-y: scroll;
-}
-
-.contact {
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    overflow-y: auto;
+    max-height: 300px;
     padding: 10px;
-    margin-bottom: 10px;
-    width: 300px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s;
-    background-color: rgba(255, 255, 255, 0.5);
-}
-
-.contact:hover {
-    transform: scale(1.05);
-}
-
-.contact p {
-    margin: 0;
-    padding: 5px;
-}
-
-.contact p:first-child {
-    font-weight: bold;
-    font-size: 1.2em;
-    color: #333;
-}
+    height: 700px;
+    width: 30%;
+  
+    .contact {
+      padding: 8px;
+      border-bottom: 1px solid #ccc;
+      cursor: pointer;
+      background-color: rgba(255, 255, 255, 0.5);
+      padding: 20px;
+      margin-top: 10px;
+        width: 300px;
+        border-radius: 10px    ;
+  
+      &:hover {
+        background-color: #f5f5f5;
+      }
+  
+      p {
+        margin: 0;
+      }
+    }
+  
+    .contact:last-child {
+      border-bottom: none;
+    }
+  }
+  
