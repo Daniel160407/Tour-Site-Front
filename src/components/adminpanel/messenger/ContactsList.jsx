@@ -12,11 +12,18 @@ function ContactsList({setContact}) {
         });
     }, []);
 
+    const deleteContact = (contactEmail) => {
+        axios.delete(`http://localhost:8080/tours/adminpanel/messenger?email=${contactEmail}`);
+    }
+
     return (
         <div className="contacts-list">
             {contacts.map(contact => (
                 <div className='contact' key={contact.name} onClick={() => setContact(contact)}>
                     <p>{contact.name}</p>
+                    <div className='delete'>
+                        <img src='/svg/trash.svg' alt='delete' onClick={() => deleteContact(contact.email)}></img>
+                    </div>
                 </div>
             ))}
         </div>

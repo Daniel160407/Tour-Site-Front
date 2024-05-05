@@ -1,7 +1,9 @@
+// eslint-disable-next-line no-unused-vars
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import '/src/style/adminpanel/messenger/chat.scss';
 
+// eslint-disable-next-line react/prop-types
 function Chat({contact}) {
     const [messages, setMessages] = useState([]);
     const [messageInput, setMessageInput] = useState('');
@@ -20,6 +22,11 @@ function Chat({contact}) {
             } else {
                 message.received = true;
                 setMessages(prevMessages => [...prevMessages, message]);
+                
+                if(document.visibilityState === 'hidden'){
+                    const notificationSound = new Audio('/sounds/notification-sound.wav');
+                    notificationSound.play();
+                }
             }
         };
     }, []);
@@ -99,7 +106,6 @@ function Chat({contact}) {
                                 </div>
                             ) : null
                         ))}
-
                     </div>
                     <div>
                         <input

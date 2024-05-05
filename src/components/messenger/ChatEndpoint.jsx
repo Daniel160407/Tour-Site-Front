@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import React, {useEffect, useState} from "react";
 import LogIn from "./LogIn";
 import '/src/style/messenger/chatEndPoint.scss';
@@ -29,7 +30,12 @@ function ChatEndPoint() {
                 setSid(message.message);
             } else {
                 message.received = true;
-                setMessages(prevmessages => [...prevmessages, message])
+                setMessages(prevmessages => [...prevmessages, message]);
+
+                if(document.visibilityState === 'hidden'){
+                    const notificationSound = new Audio('/sounds/notification-sound.wav');
+                    notificationSound.play();
+                }
             }
         }
 
