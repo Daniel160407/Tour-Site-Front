@@ -14,6 +14,7 @@ function Home({ adminMode }) {
     const [addTour, setAddTour] = useState(false);
     const [language, setLanguage] = useState('ENG');
     const [randomTour, setRandomTour] = useState(null);
+    const [isPhone, setIsPhone] = useState(false);
 
     useEffect(() => {
         if (language) {
@@ -50,6 +51,7 @@ function Home({ adminMode }) {
             setLanguage(selectElement.value);
         };
         selectElement.addEventListener('change', handleLanguageChange);
+        setIsPhone(/iPhone|iPad|iPod|Android|Windows Phone/i.test(navigator.userAgent));
         return () => {
             selectElement.removeEventListener('change', handleLanguageChange);
         };
@@ -89,7 +91,7 @@ function Home({ adminMode }) {
                             </div>
                         )}
                     </div>
-                    {randomTour !== null && (
+                    {randomTour !== null && !isPhone && (
                         <div className="card">
                             <div className="container-image">
                                 <img className="image-circle" src={`data:image/jpeg;base64,${tours[randomTour].imageData}`}></img>
