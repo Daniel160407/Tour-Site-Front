@@ -38,8 +38,11 @@ function ChatEndPoint() {
                 }
             }
         }
+    }, []);
 
-        axios.get(`http://localhost:8080/tours/adminpanel/messenger/messages?email=${email}`)
+    useEffect(() => {
+        if(!showLogin){
+            axios.get(`http://localhost:8080/tours/adminpanel/messenger/messages?email=${email}`)
             .then(response => {
                 const messages = response.data;
                 setMessages([]);
@@ -48,7 +51,8 @@ function ChatEndPoint() {
                     setMessages(prevMessages => [...prevMessages, messages[i]]);
                 }
             });
-    }, []);
+        }
+    }, [showLogin]);
 
     const sendMessage = () => {
         const message = {
