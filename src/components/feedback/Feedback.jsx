@@ -17,45 +17,52 @@ function Feedback({adminMode}) {
     }, []);
 
     const addFeedback = () => {
-        const feedback = {
-            name: document.getElementById('commentator').value,
-            time: new Date().toLocaleDateString(),
-            comment: document.getElementById('comment').value
+        const commentator = document.getElementById('commentator');
+        const comment = document.getElementById('comment');
+
+        if (commentator.value !== '' && comment.value !== '') {
+            const feedback = {
+                name: commentator.value,
+                time: new Date().toLocaleDateString(),
+                comment: comment.value
+            }
+
+            commentator.value = '';
+            comment.value = '';
+
+            axios.post('http://localhost:8080/tours/feedback', feedback)
+                .then(response => {
+                    const data = response.data;
+                    setFeedbacks([]);
+                    for (let i = 0; i < data.length; i++) {
+                        setFeedbacks(feedbacks => [...feedbacks, data[i]]);
+                    }
+                });
         }
 
-        document.getElementById('commentator').value = '';
-        document.getElementById('comment').value = '';
-        
-        axios.post('http://localhost:8080/tours/feedback', feedback)
-        .then(response => {
-            const data = response.data;
-            setFeedbacks([]);
-            for(let i=0; i<data.length; i++){
-                setFeedbacks(feedbacks => [...feedbacks, data[i]]);
-            }
-        });
     }
 
     const deleteFeedback = (comment) => {
         axios.delete(`http://localhost:8080/tours/feedback?comment=${comment}`)
-        .then(response => {
-            const data = response.data;
-            setFeedbacks([]);
-            for(let i=0; i<data.length; i++){
-                setFeedbacks(feedbacks => [...feedbacks, data[i]]);
-            }
-        });
+            .then(response => {
+                const data = response.data;
+                setFeedbacks([]);
+                for (let i = 0; i < data.length; i++) {
+                    setFeedbacks(feedbacks => [...feedbacks, data[i]]);
+                }
+            });
     }
 
     return (
         <div id='feedbacks' className='tab-pane tab fade'>
             {feedbacks.map((feedback, index) => (
                 <div className='feedback' key={index}>
-                {adminMode && (
-                    <div className="trash-container">
-                        <img className="trash" src="svg/trash.svg" onClick={() => deleteFeedback(feedback.comment)}></img>
-                    </div>
-                )}
+                    {adminMode && (
+                        <div className="trash-container">
+                            <img className="trash" src="svg/trash.svg"
+                                 onClick={() => deleteFeedback(feedback.comment)}></img>
+                        </div>
+                    )}
                     <p className='name'>{feedback.name}</p>
                     <p className='time'>{feedback.time}</p>
                     <p className='comment'>{feedback.comment}</p>
