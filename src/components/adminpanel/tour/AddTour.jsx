@@ -8,6 +8,7 @@ function AddTour() {
     const [direction, setDirection] = useState('');
     const [description, setDescription] = useState('');
     const [history, setHistory] = useState('');
+    const [requirements, setRequirements] = useState('');
     const [price, setPrice] = useState('');
     const [language, setLanguage] = useState('ENG');
     const [image, setImage] = useState(null);
@@ -21,6 +22,7 @@ function AddTour() {
         formData.append('description', description);
         formData.append('direction', direction);
         formData.append('history', history);
+        formData.append('requirements', requirements);
         formData.append('price', price);
         formData.append('language', language);
         formData.append('image', image);
@@ -67,7 +69,8 @@ function AddTour() {
                 <input className='inputs' type="text" placeholder="Tour direction" value={direction} onChange={(e) => setDirection(e.target.value)} />
                 <textarea className='inputs' placeholder="Tour description" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
                 <textarea className='inputs' placeholder='Tour history' value={history} onChange={(e) => setHistory(e.target.value)}></textarea>
-                <input className='inputs' type='text' placeholder='Tour prices' value={price} onChange={(e) => setPrice(e.target.value)}></input>
+                <textarea className='inputs' placeholder='Tour requirements' value={requirements} onChange={(e) => setRequirements(e.target.value)}></textarea>
+                <input className='inputs' type='text' placeholder='Tour price' value={price} onChange={(e) => setPrice(e.target.value)}></input>
                 <select id='adminLanguage' onChange={(e) => setLanguage(e.target.value)}>
                     <option>ENG</option>
                     <option>RUS</option>

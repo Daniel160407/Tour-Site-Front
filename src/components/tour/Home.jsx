@@ -26,7 +26,9 @@ function Home({ adminMode }) {
                         return { ...tour, imageData: base64String };
                     });
                     setTours(toursWithImages);
-                    setRandomTour(Math.floor(Math.random() * toursWithImages.length));
+                    if(toursWithImages.length !== 0){
+                        setRandomTour(Math.floor(Math.random() * toursWithImages.length));
+                    }
                 })
                 .catch(error => {
                     console.error(error);

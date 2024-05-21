@@ -29,6 +29,10 @@ function Tour({tour}) {
                         <h2>History</h2>
                         <p>{tour.history}</p>
                     </div>
+                    <div id='requirements'>
+                        <h2>Requirements</h2>
+                        <p>{tour.requirements}</p>
+                    </div>
                     <div id="price">
                         <h2>Prices</h2>
                         <h3>{tour.price}</h3>

@@ -41,6 +41,8 @@ function EditTourForm({tour}) {
                 <input type="text" name="direction" value={editedTour.direction} onChange={handleChange} required/>
                 <label>History:</label>
                 <textarea name="history" value={editedTour.history} onChange={handleChange} required/>
+                <label>Requirements</label>
+                <textarea name="requirements" value={editedTour.requirements} onChange={handleChange} required></textarea>
                 <label>Price:</label>
                 <input type="text" name="price" value={editedTour.price} onChange={handleChange} required/>
                 <button type="submit">Save</button>
