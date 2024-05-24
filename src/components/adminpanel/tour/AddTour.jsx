@@ -14,6 +14,9 @@ function AddTour() {
     const [language, setLanguage] = useState('ENG');
     const [image, setImage] = useState(null);
     const [addNewTour, setAddNewTour] = useState(true);
+
+    const [descriptionSize, setDescriptionSize] = useState(1000);
+    const [historySize, setHistorySize] = useState(1000);
     
     function saveTour(event) {
         event.preventDefault();
@@ -33,12 +36,6 @@ function AddTour() {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
-        })
-        .then(response => {
-            console.log('Tour saved successfully:', response.data);
-        })
-        .catch(error => {
-            console.error('Error saving tour:', error);
         });
 
         const inputs = document.getElementsByClassName('inputs');
@@ -69,9 +66,30 @@ function AddTour() {
             <form onSubmit={saveTour}>
                 <input className='inputs' type="text" placeholder="Tour title" value={title} onChange={(e) => setTitle(e.target.value)} />
                 <input className='inputs' type="text" placeholder="Tour direction" value={direction} onChange={(e) => setDirection(e.target.value)} />
-                <textarea className='inputs' placeholder="Tour description" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
+                <textarea className='inputs' placeholder="Tour description" value={description} onChange={(e) => {
+                    setDescription(e.target.value)
+                    if (1000 - e.target.value.length > 0) {
+                        setDescriptionSize(1000 - e.target.value.length);
+                        document.getElementById('descriptionSize').style.color = 'green';
+                    } else {
+                        setDescriptionSize('Data is too long!');
+                        document.getElementById('descriptionSize').style.color = 'red';
+                    }
+                    
+                }}></textarea>
+                <p id='descriptionSize' className='size'>{descriptionSize}</p>
                 <input className='inputs' type='text' placeholder='Tour duration' value={duration} onChange={(e) => setDuration(e.target.value)}></input>
-                <textarea className='inputs' placeholder='Tour history' value={history} onChange={(e) => setHistory(e.target.value)}></textarea>
+                <textarea className='inputs' placeholder='Tour history' value={history} onChange={(e) => {
+                    setHistory(e.target.value)
+                    if (1000 - e.target.value.length > 0) {
+                        setHistorySize(1000 - e.target.value.length);
+                        document.getElementById('historySize').style.color = 'green';
+                    } else {
+                        setHistorySize('Data is too long!');
+                        document.getElementById('historySize').style.color = 'red';
+                    }
+                }}></textarea>
+                <p id='historySize' className='size'>{historySize}</p>
                 <textarea className='inputs' placeholder='Tour requirements' value={requirements} onChange={(e) => setRequirements(e.target.value)}></textarea>
                 <input className='inputs' type='text' placeholder='Tour price' value={price} onChange={(e) => setPrice(e.target.value)}></input>
                 <select id='adminLanguage' onChange={(e) => setLanguage(e.target.value)}>

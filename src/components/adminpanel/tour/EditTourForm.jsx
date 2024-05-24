@@ -17,11 +17,13 @@ function EditTourForm({tour}) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.put(`http://localhost:8080/tours/adminpanel`, editedTour);
+        axios.put(`http://localhost:8080/tours/adminpanel`, editedTour)
+        .then(() => setReturnPage(true));
     };
 
     function deleteTour() {
-        axios.delete(`http://localhost:8080/tours/adminpanel?name=${editedTour.name}`);
+        axios.delete(`http://localhost:8080/tours/adminpanel?name=${editedTour.name}`)
+        .then(() => setReturnPage(true));
     }
 
     return (
