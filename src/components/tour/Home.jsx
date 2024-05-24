@@ -82,8 +82,8 @@ function Home({ adminMode }) {
                                         <div className="direction">
                                             <h5>{tour.direction}</h5>
                                         </div>
-                                        <div className="description">
-                                            <p>{tour.description}</p>
+                                        <div className="duration">
+                                            <p>{tour.duration}</p>
                                         </div>
                                         <div className="price">
                                             <h3>{language === 'ENG' ? 'From' : 'От'} {tour.price}</h3>

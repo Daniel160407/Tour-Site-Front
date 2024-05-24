@@ -7,6 +7,7 @@ function AddTour() {
     const [title, setTitle] = useState('');
     const [direction, setDirection] = useState('');
     const [description, setDescription] = useState('');
+    const [duration, setDuration] = useState('');
     const [history, setHistory] = useState('');
     const [requirements, setRequirements] = useState('');
     const [price, setPrice] = useState('');
@@ -21,6 +22,7 @@ function AddTour() {
         formData.append('title', title);
         formData.append('description', description);
         formData.append('direction', direction);
+        formData.append('duration', duration);
         formData.append('history', history);
         formData.append('requirements', requirements);
         formData.append('price', price);
@@ -68,6 +70,7 @@ function AddTour() {
                 <input className='inputs' type="text" placeholder="Tour title" value={title} onChange={(e) => setTitle(e.target.value)} />
                 <input className='inputs' type="text" placeholder="Tour direction" value={direction} onChange={(e) => setDirection(e.target.value)} />
                 <textarea className='inputs' placeholder="Tour description" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
+                <input className='inputs' type='text' placeholder='Tour duration' value={duration} onChange={(e) => setDuration(e.target.value)}></input>
                 <textarea className='inputs' placeholder='Tour history' value={history} onChange={(e) => setHistory(e.target.value)}></textarea>
                 <textarea className='inputs' placeholder='Tour requirements' value={requirements} onChange={(e) => setRequirements(e.target.value)}></textarea>
                 <input className='inputs' type='text' placeholder='Tour price' value={price} onChange={(e) => setPrice(e.target.value)}></input>

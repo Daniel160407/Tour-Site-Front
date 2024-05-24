@@ -39,6 +39,8 @@ function EditTourForm({tour}) {
                 <textarea name="description" value={editedTour.description} onChange={handleChange} required/>
                 <label>Direction:</label>
                 <input type="text" name="direction" value={editedTour.direction} onChange={handleChange} required/>
+                <label>Duration:</label>
+                <input type="text" name="duration" value={editedTour.duration} onChange={handleChange} required/>
                 <label>History:</label>
                 <textarea name="history" value={editedTour.history} onChange={handleChange} required/>
                 <label>Requirements</label>

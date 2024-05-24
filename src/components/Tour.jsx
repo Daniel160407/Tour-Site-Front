@@ -2,6 +2,7 @@ import {useState} from 'react';
 import '../style/tour.scss';
 import Home from './tour/Home';
 
+// eslint-disable-next-line react/prop-types
 function Tour({tour}) {
     const [returnPage, setReturnPage] = useState(null);
     const [showTour, setShowTour] = useState(true);
@@ -24,6 +25,10 @@ function Tour({tour}) {
                     <div id="description">
                         <h2>Description</h2>
                         <p>{tour.description}</p>
+                    </div>
+                    <div id='duration'>
+                        <h2>Duration</h2>
+                        <p>{tour.duration}</p>
                     </div>
                     <div id="history">
                         <h2>History</h2>
