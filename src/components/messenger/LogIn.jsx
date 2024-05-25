@@ -1,13 +1,16 @@
-import React, {useEffect, useState} from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import "/src/style/messenger/login.scss";
 
-function LogIn({sid, onLogin, setGlobalEmail}) {
+// eslint-disable-next-line react/prop-types
+function LogIn({ sid, onLogin, setGlobalEmail }) {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    function save() {
+    function save(event) {
+        event.preventDefault();
+
         const user = {
             name: name,
             email: email,
@@ -16,12 +19,10 @@ function LogIn({sid, onLogin, setGlobalEmail}) {
         };
 
         axios.post('http://localhost:8080/tours/messenger/login', user)
-            .then(response => {
-                console.log(response.data);
+            .then(() => {
+                setGlobalEmail(email);
                 onLogin();
             });
-
-        setGlobalEmail(email);
     }
 
     return (
@@ -54,12 +55,10 @@ function LogIn({sid, onLogin, setGlobalEmail}) {
                 <button className="log-in-button" type="submit">Save</button>
             </form>
             <div className="socialNetwork">
-                <a href="https://www.facebook.com/goga.abulashvili" target="_blank"><img src="/svg/facebook.svg"
-                                                                                         alt={'facebook'}></img> </a>
+                <a href="https://www.facebook.com/goga.abulashvili" target="_blank"><img src="/svg/facebook.svg" alt={'facebook'}></img></a>
             </div>
         </div>
     );
 }
-
 
 export default LogIn;

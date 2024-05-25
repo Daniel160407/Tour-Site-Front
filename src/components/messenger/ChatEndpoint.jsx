@@ -1,5 +1,4 @@
-// eslint-disable-next-line no-unused-vars
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import LogIn from "./LogIn";
 import '/src/style/messenger/chatEndPoint.scss';
 import axios from "axios";
@@ -17,7 +16,7 @@ function ChatEndPoint() {
         setSocket(newSocket);
 
         newSocket.onopen = function () {
-            setShowLogin(true);
+            console.log('WebSocket connection established');
         }
 
         newSocket.onerror = function(event) {
@@ -41,18 +40,18 @@ function ChatEndPoint() {
     }, []);
 
     useEffect(() => {
-        if(!showLogin){
+        if (!showLogin) {
             axios.get(`http://localhost:8080/tours/adminpanel/messenger/messages?email=${email}`)
-            .then(response => {
-                const messages = response.data;
-                setMessages([]);
-                for(let i=0; i<messages.length; i++){
-                    messages[i].received = messages[i].senderEmail === '';
-                    setMessages(prevMessages => [...prevMessages, messages[i]]);
-                }
-            });
+                .then(response => {
+                    const messages = response.data;
+                    setMessages([]);
+                    for (let i = 0; i < messages.length; i++) {
+                        messages[i].received = messages[i].senderEmail === '';
+                        setMessages(prevMessages => [...prevMessages, messages[i]]);
+                    }
+                });
         }
-    }, [showLogin]);
+    }, [showLogin, email]);
 
     const sendMessage = () => {
         const message = {
@@ -62,13 +61,13 @@ function ChatEndPoint() {
             receiver: 'Admin',
             message: messageInput
         };
-        
+
         socket.send(JSON.stringify(message));
-        
+
         message.received = false;
         setMessages(prevmessages => [...prevmessages, message]);
         setMessageInput('');
-        document.getElementById('messageInput').value='';
+        document.getElementById('messageInput').value = '';
     };
 
     const handleKeyPress = (event) => {
@@ -80,19 +79,19 @@ function ChatEndPoint() {
     return (
         <>
             {showLogin && (
-                <LogIn sid={sid} onLogin={() => setShowLogin(false)} setGlobalEmail={setEmail}/>
+                <LogIn sid={sid} onLogin={() => setShowLogin(false)} setGlobalEmail={setEmail} />
             )}
             {!showLogin && (
                 <div className="chat-container">
                     <div className='messages-container'>
                         {messages.map((msg, index) => (
-                            msg.received && (
+                            msg.received ? (
                                 <div className="received" key={index}>
                                     <div className="message">
                                         <p>{msg.message}</p>
                                     </div>
                                 </div>
-                            ) || !msg.received && (
+                            ) : (
                                 <div className="sent" key={index}>
                                     <div className="message">
                                         <p>{msg.message}</p>
