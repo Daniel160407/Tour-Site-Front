@@ -64,11 +64,11 @@ function AddTour() {
             }}></img>
             <h1>Add Tour</h1>
             <form onSubmit={saveTour}>
-                <input className='inputs' type="text" placeholder="Tour title" value={title} onChange={(e) => setTitle(e.target.value)} />
-                <input className='inputs' type="text" placeholder="Tour direction" value={direction} onChange={(e) => setDirection(e.target.value)} />
+                <input className='inputs' type="text" placeholder="Tour title" value={title} onChange={(e) => setTitle(e.target.value)} required/>
+                <input className='inputs' type="text" placeholder="Tour direction" value={direction} onChange={(e) => setDirection(e.target.value)} required/>
                 <textarea className='inputs' placeholder="Tour description" value={description} onChange={(e) => {
-                    setDescription(e.target.value)
-                    if (1000 - e.target.value.length > 0) {
+                    setDescription(e.target.value);
+                    if (1000 - e.target.value.length >= 0) {
                         setDescriptionSize(1000 - e.target.value.length);
                         document.getElementById('descriptionSize').style.color = 'green';
                     } else {
@@ -76,27 +76,27 @@ function AddTour() {
                         document.getElementById('descriptionSize').style.color = 'red';
                     }
                     
-                }}></textarea>
+                }} required></textarea>
                 <p id='descriptionSize' className='size'>{descriptionSize}</p>
-                <input className='inputs' type='text' placeholder='Tour duration' value={duration} onChange={(e) => setDuration(e.target.value)}></input>
+                <input className='inputs' type='text' placeholder='Tour duration' value={duration} onChange={(e) => setDuration(e.target.value)} required></input>
                 <textarea className='inputs' placeholder='Tour history' value={history} onChange={(e) => {
                     setHistory(e.target.value)
-                    if (1000 - e.target.value.length > 0) {
+                    if (1000 - e.target.value.length >= 0) {    
                         setHistorySize(1000 - e.target.value.length);
                         document.getElementById('historySize').style.color = 'green';
                     } else {
                         setHistorySize('Data is too long!');
                         document.getElementById('historySize').style.color = 'red';
                     }
-                }}></textarea>
+                }} required></textarea>
                 <p id='historySize' className='size'>{historySize}</p>
-                <textarea className='inputs' placeholder='Tour requirements' value={requirements} onChange={(e) => setRequirements(e.target.value)}></textarea>
-                <input className='inputs' type='text' placeholder='Tour price' value={price} onChange={(e) => setPrice(e.target.value)}></input>
+                <textarea className='inputs' placeholder='Tour requirements' value={requirements} onChange={(e) => setRequirements(e.target.value)} required></textarea>
+                <input className='inputs' type='text' placeholder='Tour price' value={price} onChange={(e) => setPrice(e.target.value)} required></input>
                 <select id='adminLanguage' onChange={(e) => setLanguage(e.target.value)}>
                     <option>ENG</option>
                     <option>RUS</option>
                 </select>
-                <input className='inputs' type='file' onChange={handleImageChange}></input>
+                <input className='inputs' type='file' onChange={handleImageChange} required></input>
                 <input type='submit' value='Save'></input>
             </form>
         </div>
