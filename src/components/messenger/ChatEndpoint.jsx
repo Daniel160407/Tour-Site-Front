@@ -16,14 +16,6 @@ function ChatEndPoint() {
         const newSocket = new WebSocket('ws://localhost:8080/messenger');
         setSocket(newSocket);
 
-        newSocket.onopen = function () {
-            console.log('WebSocket connection established');
-        }
-
-        newSocket.onerror = function(event) {
-            console.error('WebSocket connection error:', event);
-        };
-
         newSocket.onmessage = function (event) {
             const message = JSON.parse(event.data);
             if (message.sender === 'server') {

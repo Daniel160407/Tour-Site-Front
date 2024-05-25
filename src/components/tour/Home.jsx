@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-unused-vars
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import '../../style/tour/home.scss';
@@ -6,8 +5,7 @@ import Tour from "../Tour";
 import EditTourForm from "../adminpanel/tour/EditTourForm";
 import AddTour from "../adminpanel/tour/AddTour";
 
-// eslint-disable-next-line react/prop-types
-function Home({ adminMode }) {
+function Home({ adminMode, searchText }) {
     const [tours, setTours] = useState([]);
     const [selectedTour, setSelectedTour] = useState(null);
     const [showTour, setShowTour] = useState(true);
@@ -17,29 +15,47 @@ function Home({ adminMode }) {
     const [isPhone, setIsPhone] = useState(false);
 
     useEffect(() => {
-        if (language) {
+        if (language && showTour) {
             axios.get(`http://localhost:8080/tours/tour?language=${language}`)
                 .then(response => {
-                    const toursWithImages = response.data.tours.map(tour => {
-                        const byteCharacters = atob(tour.imageData);
-                        const base64String = btoa(byteCharacters);
-                        return { ...tour, imageData: base64String };
-                    });
+                    const toursWithImages = response.data.tours.map(tour => ({
+                        ...tour,
+                        imageData: tour.imageData
+                    }));
                     setTours(toursWithImages);
-                    if(toursWithImages.length !== 0){
+                    if (toursWithImages.length !== 0) {
                         setRandomTour(Math.floor(Math.random() * toursWithImages.length));
                     }
-                })
-                .catch(error => {
-                    console.error(error);
                 });
         }
-    }, [language]);
+    }, [language, showTour]);
+
+    useEffect(() => {
+        if (searchText !== undefined) {
+            axios.get(`http://localhost:8080/tours/tour/search?prefix=${searchText}`)
+                .then(response => {
+                    if(response !== undefined){
+                        const toursWithImages = response.data.tours.map(tour => ({
+                            ...tour,
+                            imageData: tour.imageData
+                        }));
+                        setTours(toursWithImages);
+                        if (toursWithImages.length !== 0) {
+                            setRandomTour(Math.floor(Math.random() * toursWithImages.length));
+                        }
+                    }
+                });
+        }
+    }, [searchText]);
 
     function openTour(tour) {
         setSelectedTour(tour);
-        setTours([]);
         setShowTour(false);
+    }
+
+    function exitTour() {
+        setSelectedTour(null);
+        setShowTour(true);
     }
 
     function addNewTour() {
@@ -63,17 +79,17 @@ function Home({ adminMode }) {
         <>
             {showTour && (
                 <div id='home' className='tab-pane tab fade show active'>
-                    {showTour && adminMode && (
+                    {adminMode && (
                         <button id="add" type="btn" onClick={addNewTour}>Add Tour</button>
                     )}
                     <div id="tours">
-                        {tours && (
+                        {tours.length > 0 && (
                             <div id="toursList">
                                 {tours.map(tour => (
                                     <div key={tour.name} className="tour" onClick={() => openTour(tour)}>
                                         <div className="header">
                                             <div>
-                                                <img src={`data:image/jpeg;base64,${tour.imageData}`} alt={tour.name}></img>
+                                                <img src={`data:image/jpeg;base64,${tour.imageData}`} alt={tour.name} />
                                             </div>
                                             <div className="titleBox">
                                                 <h1 className="title">{tour.name}</h1>
@@ -93,10 +109,10 @@ function Home({ adminMode }) {
                             </div>
                         )}
                     </div>
-                    {randomTour !== null && !isPhone && (
+                    {randomTour !== null && !isPhone && tours.length !== 0 && (
                         <div className="card">
                             <div className="container-image">
-                                <img className="image-circle" src={`data:image/jpeg;base64,${tours[randomTour].imageData}`}></img>
+                                <img className="image-circle" src={`data:image/jpeg;base64,${tours[randomTour].imageData}`} alt={tours[randomTour].name} />
                                 <h2>{tours[randomTour].name}</h2>
                             </div>
                             <div className="content">
@@ -104,13 +120,13 @@ function Home({ adminMode }) {
                                     <span>{tours[randomTour].name}</span>
                                     <p>{tours[randomTour].price}</p>
                                     <div className="buttons">
-                                        <button onClick={() => {openTour(tours[randomTour])}}>Info</button>
-                                        <button onClick={() => {setRandomTour(null)}}>Close</button>
+                                        <button onClick={() => openTour(tours[randomTour])}>Info</button>
+                                        <button onClick={() => setRandomTour(null)}>Close</button>
                                     </div>
                                 </div>
                                 <div className="product-image">
                                     <div className="box-image">
-                                        <img className="img-product" src={`data:image/jpeg;base64,${tours[randomTour].imageData}`}></img>
+                                        <img className="img-product" src={`data:image/jpeg;base64,${tours[randomTour].imageData}`} alt={tours[randomTour].name} />
                                     </div>
                                 </div>
                             </div>
@@ -118,14 +134,14 @@ function Home({ adminMode }) {
                     )}
                 </div>
             )}
-            {!showTour && addTour && (
-                <AddTour/>
+            {addTour && (
+                <AddTour />
             )}
             {selectedTour && !adminMode && (
-                <Tour tour={selectedTour}/>
+                <Tour tour={selectedTour} exit={exitTour} />
             )}
             {selectedTour && adminMode && (
-                <EditTourForm tour={selectedTour}/>
+                <EditTourForm tour={selectedTour} />
             )}
         </>
     );

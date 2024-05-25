@@ -3,8 +3,7 @@ import '../style/tour.scss';
 import Home from './tour/Home';
 
 // eslint-disable-next-line react/prop-types
-function Tour({tour}) {
-    const [returnPage, setReturnPage] = useState(null);
+function Tour({tour, exit}) {
     const [showTour, setShowTour] = useState(true);
 
     return (
@@ -12,8 +11,8 @@ function Tour({tour}) {
             {showTour && (
                 <div id='tour'>
                     <img src='/svg/arrow.svg' alt={'Go back'} onClick={() => {
-                        setReturnPage('return')
                         setShowTour(false);
+                        exit();
                     }}></img>
                     <div id='name'>
                         <h1>{tour.name}</h1>
@@ -43,10 +42,6 @@ function Tour({tour}) {
                         <h3>{tour.price}</h3>
                     </div>
                 </div>
-            )}
-
-            {returnPage && (
-                <Home adminMode={false}/>
             )}
         </>
 

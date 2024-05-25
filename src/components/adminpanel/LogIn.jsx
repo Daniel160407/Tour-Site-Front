@@ -4,8 +4,7 @@ import { useHistory } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import '/src/style/adminpanel/login.scss';
 import root from '../../script/root';
-import Content from './Content';
-import Navbar from '../Navbar';
+import AdminPanelApp from './AdminPanelApp';
 
 function LogIn() {
     const [showError, setShowError] = useState(false);
@@ -16,10 +15,7 @@ function LogIn() {
         const isLoggedIn = Cookies.get('isLoggedIn');
         if (isLoggedIn === 'true') {
             root.render(
-                <>
-                    <Navbar/>
-                    <Content/>
-                </>
+                <AdminPanelApp/>
             );
         }
     }, [history]);
@@ -40,10 +36,7 @@ function LogIn() {
                     }
                     
                     root.render(
-                        <>
-                            <Navbar/>
-                            <Content/>
-                        </>
+                        <AdminPanelApp/>
                     );
                 }
             });

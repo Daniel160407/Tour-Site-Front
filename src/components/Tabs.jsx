@@ -3,10 +3,10 @@ import Feedback from './feedback/Feedback';
 import Messenger from './messenger/Messenger';
 import Home from './tour/Home';
 
-function Tabs(){
+function Tabs({searchText}){
     return(
         <div className="tab-content">
-            <Home adminMode={false}/>
+            <Home adminMode={false} searchText={searchText}/>
             <Messenger/>
             <Feedback adminMode={false}/>
         </div>

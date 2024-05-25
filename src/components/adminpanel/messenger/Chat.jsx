@@ -1,15 +1,15 @@
 // eslint-disable-next-line no-unused-vars
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import '/src/style/adminpanel/messenger/chat.scss';
 
-// eslint-disable-next-line react/prop-types
-function Chat({contact}) {
+function Chat({ contact }) {
     const [messages, setMessages] = useState([]);
     const [messageInput, setMessageInput] = useState('');
     const [sid, setSid] = useState(null);
     const [showChat, setShowChat] = useState(false);
     const [socket, setSocket] = useState(null);
+    const messagesEndRef = useRef(null);
 
     useEffect(() => {
         const newSocket = new WebSocket('ws://localhost:8080/messenger');
@@ -22,12 +22,16 @@ function Chat({contact}) {
             } else {
                 message.received = true;
                 setMessages(prevMessages => [...prevMessages, message]);
-                
-                if(document.visibilityState === 'hidden'){
+
+                if (document.visibilityState === 'hidden') {
                     const notificationSound = new Audio('/sounds/notification-sound.wav');
                     notificationSound.play();
                 }
             }
+        };
+
+        return () => {
+            newSocket.close();
         };
     }, []);
 
@@ -48,16 +52,24 @@ function Chat({contact}) {
         if (contact !== null) {
             setShowChat(true);
             axios.get(`http://localhost:8080/tours/adminpanel/messenger/messages?email=${contact.email}`)
-            .then(response => {
-                const messages = response.data;
-                setMessages([]);
-                for(let i=0; i<messages.length; i++){
-                    messages[i].received = messages[i].senderEmail !== '';
-                    setMessages(prevMessages => [...prevMessages, messages[i]]);
-                }
-            });
+                .then(response => {
+                    const messages = response.data;
+                    setMessages([]);
+                    for (let i = 0; i < messages.length; i++) {
+                        messages[i].received = messages[i].senderEmail !== '';
+                        setMessages(prevMessages => [...prevMessages, messages[i]]);
+                    }
+                });
         }
     }, [contact]);
+
+    useEffect(() => {
+        scrollToBottom();
+    }, [messages]);
+
+    const scrollToBottom = () => {
+        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    };
 
     const sendMessage = () => {
         const message = {
@@ -67,7 +79,6 @@ function Chat({contact}) {
             receiver: contact.sid,
             message: messageInput
         };
-
 
         setMessageInput('');
         document.getElementById('messageInput').value = '';
@@ -106,12 +117,13 @@ function Chat({contact}) {
                                 </div>
                             ) : null
                         ))}
+                        <div ref={messagesEndRef} />
                     </div>
                     <div>
                         <input
                             id='messageInput'
                             type='text'
-                            placeholder='Tipe something'
+                            placeholder='Type something'
                             onChange={(e) => setMessageInput(e.target.value)}
                             onKeyPress={handleKeyPress}></input>
                     </div>
