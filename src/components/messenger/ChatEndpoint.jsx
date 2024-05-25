@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import LogIn from "./LogIn";
 import '/src/style/messenger/chatEndPoint.scss';
 import axios from "axios";
@@ -10,6 +10,7 @@ function ChatEndPoint() {
     const [messages, setMessages] = useState([]);
     const [messageInput, setMessageInput] = useState('');
     const [socket, setSocket] = useState(null);
+    const messagesEndRef = useRef(null);
 
     useEffect(() => {
         const newSocket = new WebSocket('ws://localhost:8080/messenger');
@@ -29,9 +30,9 @@ function ChatEndPoint() {
                 setSid(message.message);
             } else {
                 message.received = true;
-                setMessages(prevmessages => [...prevmessages, message]);
+                setMessages(prevMessages => [...prevMessages, message]);
 
-                if(document.visibilityState === 'hidden'){
+                if (document.visibilityState === 'hidden') {
                     const notificationSound = new Audio('/sounds/notification-sound.wav');
                     notificationSound.play();
                 }
@@ -53,6 +54,12 @@ function ChatEndPoint() {
         }
     }, [showLogin, email]);
 
+    useEffect(() => {
+        if (messagesEndRef.current) {
+            messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
+    }, [messages]);
+
     const sendMessage = () => {
         const message = {
             senderEmail: email,
@@ -65,13 +72,13 @@ function ChatEndPoint() {
         socket.send(JSON.stringify(message));
 
         message.received = false;
-        setMessages(prevmessages => [...prevmessages, message]);
+        setMessages(prevMessages => [...prevMessages, message]);
         setMessageInput('');
         document.getElementById('messageInput').value = '';
     };
 
     const handleKeyPress = (event) => {
-        if (event.key === 'Enter') {
+        if (event.key === 'Enter' && event.target.value !== '') {
             sendMessage();
         }
     }
@@ -99,12 +106,13 @@ function ChatEndPoint() {
                                 </div>
                             )
                         ))}
+                        <div ref={messagesEndRef} />
                     </div>
                     <div className="input-container">
                         <input
                             id='messageInput'
                             type='text'
-                            placeholder='Type something'
+                            placeholder='Tipe something'
                             onChange={(e) => setMessageInput(e.target.value)}
                             onKeyPress={handleKeyPress}></input>
                     </div>

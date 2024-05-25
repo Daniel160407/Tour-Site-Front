@@ -7,13 +7,18 @@
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    overflow: hidden;   
+    overflow: hidden;
+
+    @media (max-width: 768px) {
+        height: 100vh;
+        padding: 10px;
+    }
 
     .messages-container {
         flex: 1;
-      overflow-y: scroll;
-      scroll-behavior: smooth;
-      margin-bottom: 10px;
+        overflow-y: scroll;
+        scroll-behavior: smooth;
+        margin-bottom: 10px;
 
         .message {
             max-width: 70%;
@@ -21,6 +26,12 @@
             border-radius: 8px;
             margin: 5px 0;
             background-color: rgba(128, 128, 128, 0.5);
+
+            @media (max-width: 768px) {
+                max-width: 90%;
+                padding: 6px 10px;
+                margin: 3px 0;
+            }
         }
     }
 
@@ -37,12 +48,18 @@
             box-sizing: border-box;
             margin-top: 10px;
             font-size: 1rem;
-        
+
             &:focus {
-              outline: none;
-              border-color: #007bff;
+                outline: none;
+                border-color: #007bff;
             }
-          }
+
+            @media (max-width: 768px) {
+                padding: 6px;
+                font-size: 0.875rem;
+                margin-top: 5px;
+            }
+        }
     }
 }
 
