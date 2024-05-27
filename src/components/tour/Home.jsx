@@ -19,6 +19,16 @@ function Home({adminMode, searchText}) {
 
     useEffect(() => {
         if (!adminMode) {
+            axios.get('https://ipinfo.io/json?token=d2261c6bcf22ce')
+                .then(response => {                    
+                    const userCountry = {
+                        ip: response.data.ip,
+                        country: response.data.country
+                    }
+
+                    axios.post(`http://localhost:8080/states`, userCountry);
+                });
+                
             const handleBeforeUnload = () => {
                 const endTime = Date.now();
                 const duration = ((endTime - startTime.current) / 1000 / 60).toFixed(2);

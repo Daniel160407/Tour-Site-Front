@@ -30,29 +30,83 @@
                 color: #666;
             }
 
-            .clear-button {
-                margin-top: 10px;
-                padding: 8px 16px;
-                font-size: 1em;
-                color: #fff;
-                background-color: #ff6b6b;
-                border: none;
-                border-radius: 4px;
-                cursor: pointer;
-                transition: background-color 0.3s;
-
-                &:hover {
-                    background-color: #ff4c4c;
-                }
-
-                &:focus {
-                    outline: none;
-                }
-            }
-
             &:hover {
                 transform: translateY(-5px);
                 box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            }
+
+            .clear-button {
+                margin-top: 10px;
+                padding: 5px 10px;
+                background-color: #ff4d4d;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: #e60000;
+                }
+            }
+        }
+    }
+
+    .country-stats-container {
+        margin-top: 20px;
+        padding: 20px;
+        background-color: #f0f0f0;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            color: #333;
+        }
+
+        .country-stat-item {
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+
+            p {
+                margin: 0 0 5px;
+                font-size: 1.2em;
+                color: #333;
+                text-align: center;
+            }
+
+            .progress-bar {
+                background-color: #e0e0e0;
+                border-radius: 8px;
+                overflow: hidden;
+                height: 20px;
+
+                .progress {
+                    height: 100%;
+                    background-color: #4caf50;
+                }
+            }
+        }
+
+        .clear-button {
+            margin-top: 10px;
+            padding: 5px 10px;
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 70px;
+            align-self: center;
+
+            &:hover {
+                background-color: #e60000;
             }
         }
     }

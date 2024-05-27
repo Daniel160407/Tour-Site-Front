@@ -7,6 +7,7 @@ const States = () => {
     const [clicks, setClicks] = useState(0);
     const [messages, setMessages] = useState(0);
     const [feedbacks, setFeedbacks] = useState(0);
+    const [countryStats, setCountryStats] = useState([]);
 
     useEffect(() => {
         const fetchData = () => {
@@ -17,7 +18,31 @@ const States = () => {
                     setClicks(data.clicks);
                     setMessages(data.messages);
                     setFeedbacks(data.feedbacks);
-                });
+                })
+                .catch(error => console.error('Error fetching states:', error));
+
+            axios.get('http://localhost:8080/states/countries')
+                .then(response => {
+                    const countryData = response.data || [];
+                    if (Array.isArray(countryData)) {
+                        const countryCount = countryData.reduce((acc, user) => {
+                            const country = user.country;
+                            acc[country] = (acc[country] || 0) + 1;
+                            return acc;
+                        }, {});
+
+                        const totalCountries = Object.values(countryCount).reduce((acc, count) => acc + count, 0);
+
+                        const countryStats = Object.keys(countryCount).map(country => ({
+                            country,
+                            count: countryCount[country],
+                            percentage: ((countryCount[country] / totalCountries) * 100).toFixed(2)
+                        }));
+
+                        setCountryStats(countryStats);
+                    }
+                })
+                .catch(error => console.error('Error fetching country data:', error));
         };
 
         fetchData();
@@ -35,7 +60,13 @@ const States = () => {
             setClicks(data.clicks);
             setMessages(data.messages);
             setFeedbacks(data.feedbacks);
-        });
+        })
+        .catch(error => console.error('Error clearing state:', error));
+    }
+
+    const clearCountries = () => {
+        axios.delete('http://localhost:8080/states/countries');
+        setCountryStats([]);
     }
 
     return (
@@ -61,6 +92,18 @@ const States = () => {
                     <p>{feedbacks}</p>
                     <button className='clear-button' onClick={() => clearState('feedbacks')}>Clear</button>
                 </div>
+            </div>
+            <div className='country-stats-container'>
+                <h2>Country Statistics</h2>
+                {countryStats.map(stat => (
+                    <div key={stat.country} className='country-stat-item'>
+                        <p>{stat.country}: {stat.percentage}%</p>
+                        <div className='progress-bar'>
+                            <div className='progress' style={{ width: `${stat.percentage}%` }}></div>
+                        </div>
+                    </div>
+                ))}
+                <button className='clear-button' onClick={clearCountries}>Clear</button>
             </div>
         </div>
     );
