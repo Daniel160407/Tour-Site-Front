@@ -2,6 +2,7 @@ import axios from "axios";
 import {useEffect, useState} from "react";
 import '../../style/feedback/feedback.scss';
 
+// eslint-disable-next-line react/prop-types
 function Feedback({adminMode}) {
     const [feedbacks, setFeedbacks] = useState([]);
 
@@ -69,7 +70,7 @@ function Feedback({adminMode}) {
                 </div>
             ))}
             <div className='newFeedback'>
-                <input id="commentator" type="text" placeholder="Name"></input>
+                <input id="commentator" type="text" placeholder="Your name"></input>
                 <textarea id="comment" className='newFeedbackText' placeholder='Write your feedback'></textarea>
                 <button className="animated-button" onClick={() => {
                     addFeedback()

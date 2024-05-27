@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState, useRef} from "react";
 import axios from "axios";
 import '../../style/tour/home.scss';
 import Tour from "../Tour";
 import EditTourForm from "../adminpanel/tour/EditTourForm";
 import AddTour from "../adminpanel/tour/AddTour";
 
-function Home({ adminMode, searchText }) {
+// eslint-disable-next-line react/prop-types
+function Home({adminMode, searchText}) {
     const [tours, setTours] = useState([]);
     const [selectedTour, setSelectedTour] = useState(null);
     const [showTour, setShowTour] = useState(true);
@@ -13,6 +14,24 @@ function Home({ adminMode, searchText }) {
     const [language, setLanguage] = useState('ENG');
     const [randomTour, setRandomTour] = useState(null);
     const [isPhone, setIsPhone] = useState(false);
+    const startTime = useRef(Date.now());
+    const clicks = useRef(0);
+
+    useEffect(() => {
+        if (!adminMode) {
+            const handleBeforeUnload = () => {
+                const endTime = Date.now();
+                const duration = ((endTime - startTime.current) / 1000 / 60).toFixed(2);
+                axios.put(`http://localhost:8080/states?time=${duration}&clicks=${clicks.current}`);
+            };
+
+            window.addEventListener('beforeunload', handleBeforeUnload);
+
+            return () => {
+                window.removeEventListener('beforeunload', handleBeforeUnload);
+            };
+        }
+    }, []);
 
     useEffect(() => {
         if (language && showTour) {
@@ -34,7 +53,7 @@ function Home({ adminMode, searchText }) {
         if (searchText !== undefined) {
             axios.get(`http://localhost:8080/tours/tour/search?prefix=${searchText}`)
                 .then(response => {
-                    if(response !== undefined){
+                    if (response !== undefined) {
                         const toursWithImages = response.data.tours.map(tour => ({
                             ...tour,
                             imageData: tour.imageData
@@ -49,6 +68,7 @@ function Home({ adminMode, searchText }) {
     }, [searchText]);
 
     function openTour(tour) {
+        clicks.current++;
         setSelectedTour(tour);
         setShowTour(false);
     }
@@ -89,7 +109,7 @@ function Home({ adminMode, searchText }) {
                                     <div key={tour.name} className="tour" onClick={() => openTour(tour)}>
                                         <div className="header">
                                             <div>
-                                                <img src={`data:image/jpeg;base64,${tour.imageData}`} alt={tour.name} />
+                                                <img src={`data:image/jpeg;base64,${tour.imageData}`} alt={tour.name}/>
                                             </div>
                                             <div className="titleBox">
                                                 <h1 className="title">{tour.name}</h1>
@@ -112,7 +132,9 @@ function Home({ adminMode, searchText }) {
                     {randomTour !== null && !isPhone && tours.length !== 0 && (
                         <div className="card">
                             <div className="container-image">
-                                <img className="image-circle" src={`data:image/jpeg;base64,${tours[randomTour].imageData}`} alt={tours[randomTour].name} />
+                                <img className="image-circle"
+                                     src={`data:image/jpeg;base64,${tours[randomTour].imageData}`}
+                                     alt={tours[randomTour].name}/>
                                 <h2>{tours[randomTour].name}</h2>
                             </div>
                             <div className="content">
@@ -126,7 +148,9 @@ function Home({ adminMode, searchText }) {
                                 </div>
                                 <div className="product-image">
                                     <div className="box-image">
-                                        <img className="img-product" src={`data:image/jpeg;base64,${tours[randomTour].imageData}`} alt={tours[randomTour].name} />
+                                        <img className="img-product"
+                                             src={`data:image/jpeg;base64,${tours[randomTour].imageData}`}
+                                             alt={tours[randomTour].name}/>
                                     </div>
                                 </div>
                             </div>
@@ -135,13 +159,13 @@ function Home({ adminMode, searchText }) {
                 </div>
             )}
             {addTour && (
-                <AddTour />
+                <AddTour/>
             )}
             {selectedTour && !adminMode && (
-                <Tour tour={selectedTour} exit={exitTour} />
+                <Tour tour={selectedTour} language={language} exit={exitTour}/>
             )}
             {selectedTour && adminMode && (
-                <EditTourForm tour={selectedTour} />
+                <EditTourForm tour={selectedTour}/>
             )}
         </>
     );

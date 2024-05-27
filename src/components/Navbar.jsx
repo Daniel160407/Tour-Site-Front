@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../style/navbar.scss';
 
-const Navbar = ({ setGlobalSearchText }) => {
+const Navbar = ({adminMode, setGlobalSearchText }) => {
     const [searchText, setSearchText] = useState('');
 
     const handleKeyPress = (event) => {
@@ -23,6 +23,11 @@ const Navbar = ({ setGlobalSearchText }) => {
                     <li className="nav-item" key="feedbacks">
                         <a className="nav-link" data-toggle="tab" href="#feedbacks">Feedbacks</a>
                     </li>
+                    {adminMode && (
+                        <li className="nav-item" key="states">
+                            <a className="nav-link" data-toggle="tab" href="#states">States</a>
+                        </li>
+                    )}
                 </ul>
                 <div className="navbar-brand">
                     <span className="title">Georgia & Tours</span>

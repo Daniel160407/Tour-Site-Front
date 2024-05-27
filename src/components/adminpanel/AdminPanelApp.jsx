@@ -7,7 +7,7 @@ const AdminPanelApp = () => {
 
     return (
         <>
-            <Navbar setGlobalSearchText={setSearchText} />
+            <Navbar adminMode={true} setGlobalSearchText={setSearchText} />
             <Content searchText={searchText} />
         </>
     );

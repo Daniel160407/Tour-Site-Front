@@ -1,4 +1,3 @@
-import React from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import AdminPanel from './components/adminpanel/AdminPanel';
 import Tours from './components/Tours';
