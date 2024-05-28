@@ -1,12 +1,10 @@
 import React, {useState} from "react";
 import axios from "axios";
 import '/src/style/adminpanel/tour/EditTourForm.scss';
-import Home from "../../tour/Home.jsx";
 
 // eslint-disable-next-line react/prop-types
-function EditTourForm({tour}) {
+function EditTourForm({tour, exit}) {
     const [editedTour, setEditedTour] = useState({...tour});
-    const [returnPage, setReturnPage] = useState(false);
 
     const [descriptionSize, setDescriptionSize] = useState(1000);
     const [historySize, setHistorySize] = useState(1000);
@@ -22,20 +20,19 @@ function EditTourForm({tour}) {
     const handleSubmit = (e) => {
         e.preventDefault();
         axios.put(`http://localhost:8080/tours/adminpanel`, editedTour)
-        .then(() => setReturnPage(true));
+        .then(() => exit());
     };
 
     function deleteTour() {
         axios.delete(`http://localhost:8080/tours/adminpanel?name=${editedTour.name}`)
-        .then(() => setReturnPage(true));
+        .then(() => exit());
     }
 
     return (
         <>
-        {!returnPage && (
             <div className="edit-tour-form">
             <img src='/svg/arrow.svg' onClick={() => {
-                setReturnPage(true)
+                exit();
             }}></img>
             <h2>Edit Tour</h2>
             <form onSubmit={handleSubmit}>
@@ -77,10 +74,6 @@ function EditTourForm({tour}) {
             </form>
             <button type="btn" onClick={() => deleteTour()}>Delete Tour</button>
         </div>
-        )}
-        {returnPage && (
-            <Home adminMode={true}/>
-        )}
         </>
         
     );

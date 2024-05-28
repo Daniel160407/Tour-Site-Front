@@ -1,27 +1,29 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import '../../style/adminpanel/states.scss';
+import '../../style/adminpanel/statistics.scss';
 
-const States = () => {
+const Statistics = () => {
     const [time, setTime] = useState(0);
     const [clicks, setClicks] = useState(0);
+    const [users, setUsers] = useState(0);
     const [messages, setMessages] = useState(0);
     const [feedbacks, setFeedbacks] = useState(0);
     const [countryStats, setCountryStats] = useState([]);
 
     useEffect(() => {
         const fetchData = () => {
-            axios.get('http://localhost:8080/states')
+            axios.get('http://localhost:8080/statistics')
                 .then(response => {
                     const data = response.data;
                     setTime(data.time);
                     setClicks(data.clicks);
+                    setUsers(data.users);
                     setMessages(data.messages);
                     setFeedbacks(data.feedbacks);
                 })
                 .catch(error => console.error('Error fetching states:', error));
 
-            axios.get('http://localhost:8080/states/countries')
+            axios.get('http://localhost:8080/statistics/countries')
                 .then(response => {
                     const countryData = response.data || [];
                     if (Array.isArray(countryData)) {
@@ -53,11 +55,12 @@ const States = () => {
     }, []);
 
     const clearState = (state) => {
-        axios.delete(`http://localhost:8080/states?state=${state}`)
+        axios.delete(`http://localhost:8080/statistics?statistic=${state}`)
         .then(response => {
             const data = response.data;
             setTime(data.time);
             setClicks(data.clicks);
+            setUsers(data.users);
             setMessages(data.messages);
             setFeedbacks(data.feedbacks);
         })
@@ -65,12 +68,12 @@ const States = () => {
     }
 
     const clearCountries = () => {
-        axios.delete('http://localhost:8080/states/countries');
+        axios.delete('http://localhost:8080/statistics/countries');
         setCountryStats([]);
     }
 
     return (
-        <div id='states' className='tab-pane tab fade'>
+        <div id='statistics' className='tab-pane tab fade'>
             <div className='states-container'>
                 <div className='state-item'>
                     <h2>Time Spent</h2>
@@ -81,6 +84,11 @@ const States = () => {
                     <h2>Clicks</h2>
                     <p>{clicks}</p>
                     <button className='clear-button' onClick={() => clearState('clicks')}>Clear</button>
+                </div>
+                <div className='state-item'>
+                    <h2>Users Registered</h2>
+                    <p>{users}</p>
+                    <button className='clear-button' onClick={() => clearState('users')}>Clear</button>
                 </div>
                 <div className='state-item'>
                     <h2>Messages</h2>
@@ -109,4 +117,4 @@ const States = () => {
     );
 }
 
-export default States;
+export default Statistics;

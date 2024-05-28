@@ -1,4 +1,4 @@
-#states {
+#statistics {
     .states-container {
         display: flex;
         flex-wrap: wrap;
@@ -14,7 +14,7 @@
             border-radius: 8px;
             padding: 20px;
             margin: 10px;
-            flex: 1 1 calc(25% - 40px);
+            flex: 1 1 calc(20% - 40px);
             text-align: center;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
             transition: transform 0.2s;

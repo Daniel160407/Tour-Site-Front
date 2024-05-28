@@ -175,7 +175,7 @@ function Home({adminMode, searchText}) {
                 <Tour tour={selectedTour} language={language} exit={exitTour}/>
             )}
             {selectedTour && adminMode && (
-                <EditTourForm tour={selectedTour}/>
+                <EditTourForm tour={selectedTour} exit={exitTour}/>
             )}
         </>
     );

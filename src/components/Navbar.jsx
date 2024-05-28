@@ -24,8 +24,8 @@ const Navbar = ({adminMode, setGlobalSearchText }) => {
                         <a className="nav-link" data-toggle="tab" href="#feedbacks">Feedbacks</a>
                     </li>
                     {adminMode && (
-                        <li className="nav-item" key="states">
-                            <a className="nav-link" data-toggle="tab" href="#states">States</a>
+                        <li className="nav-item" key="statistics">
+                            <a className="nav-link" data-toggle="tab" href="#statistics">Statistics</a>
                         </li>
                     )}
                 </ul>
