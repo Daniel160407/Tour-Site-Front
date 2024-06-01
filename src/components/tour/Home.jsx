@@ -1,11 +1,10 @@
-import React, {useEffect, useState, useRef} from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import '../../style/tour/home.scss';
 import Tour from "../Tour";
 import EditTourForm from "../adminpanel/tour/EditTourForm";
 import AddTour from "../adminpanel/tour/AddTour";
 
-// eslint-disable-next-line react/prop-types
 function Home({adminMode, searchText}) {
     const [tours, setTours] = useState([]);
     const [selectedTour, setSelectedTour] = useState(null);
@@ -26,13 +25,13 @@ function Home({adminMode, searchText}) {
                         country: response.data.country
                     }
 
-                    axios.post(`http://localhost:8080/states`, userCountry);
+                    axios.post(`http://localhost:8080/statistics`, userCountry);
                 });
                 
             const handleBeforeUnload = () => {
                 const endTime = Date.now();
                 const duration = ((endTime - startTime.current) / 1000 / 60).toFixed(2);
-                axios.put(`http://localhost:8080/states?time=${duration}&clicks=${clicks.current}`);
+                axios.put(`http://localhost:8080/statistics?time=${duration}&clicks=${clicks.current}`);
             };
 
             window.addEventListener('beforeunload', handleBeforeUnload);
@@ -106,9 +105,9 @@ function Home({adminMode, searchText}) {
     }, []);
 
     return (
-        <>
+        <div id='home' className='tab-pane tab fade show active'>
             {showTour && (
-                <div id='home' className='tab-pane tab fade show active'>
+                <>
                     {adminMode && (
                         <button id="add" type="btn" onClick={addNewTour}>Add Tour</button>
                     )}
@@ -166,7 +165,7 @@ function Home({adminMode, searchText}) {
                             </div>
                         </div>
                     )}
-                </div>
+                </>
             )}
             {addTour && (
                 <AddTour/>
@@ -177,7 +176,7 @@ function Home({adminMode, searchText}) {
             {selectedTour && adminMode && (
                 <EditTourForm tour={selectedTour} exit={exitTour}/>
             )}
-        </>
+        </div>
     );
 }
 

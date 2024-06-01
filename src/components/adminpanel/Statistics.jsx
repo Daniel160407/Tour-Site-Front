@@ -21,7 +21,7 @@ const Statistics = () => {
                     setMessages(data.messages);
                     setFeedbacks(data.feedbacks);
                 })
-                .catch(error => console.error('Error fetching states:', error));
+                .catch(error => console.error('Error fetching statistics:', error));
 
             axios.get('http://localhost:8080/statistics/countries')
                 .then(response => {
@@ -64,7 +64,7 @@ const Statistics = () => {
             setMessages(data.messages);
             setFeedbacks(data.feedbacks);
         })
-        .catch(error => console.error('Error clearing state:', error));
+        .catch(error => console.error('Error clearing statistic:', error));
     }
 
     const clearCountries = () => {

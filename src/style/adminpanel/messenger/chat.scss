@@ -23,12 +23,20 @@
       margin-bottom: 10px;
   
       .message {
-        max-width: 70%;
-        padding: 8px 12px;
-        border-radius: 8px;
-        margin: 5px 0;
-        background-color: rgba(128, 128, 128, 0.5);
-      }
+            max-width: 70%;
+            padding: 8px 12px;
+            border-radius: 8px;
+            margin: 5px 0;
+            background-color: rgba(128, 128, 128, 0.5);
+            box-sizing: border-box;
+            word-wrap: break-word;
+        
+            @media (max-width: 768px) {
+                max-width: 90%;
+                padding: 6px 10px;
+                margin: 3px 0;
+            }
+        }
   
       .received {
         align-self: flex-start;

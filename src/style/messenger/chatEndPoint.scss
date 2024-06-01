@@ -26,7 +26,9 @@
             border-radius: 8px;
             margin: 5px 0;
             background-color: rgba(128, 128, 128, 0.5);
-
+            box-sizing: border-box;
+            word-wrap: break-word;
+        
             @media (max-width: 768px) {
                 max-width: 90%;
                 padding: 6px 10px;
