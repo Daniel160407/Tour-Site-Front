@@ -6,6 +6,7 @@ import '/src/style/adminpanel/messenger/messenger.scss';
 function Messenger({adminMode}){
     const [contact, setContact] = useState(null);
     const [display, setDisplay] = useState(null);
+    const [globalContacts, setGlobalContacts] = useState([]);
 
     useEffect(()=>{
         if(adminMode){
@@ -13,12 +14,11 @@ function Messenger({adminMode}){
         }
     },[])
     
-
     return(
         <div id='contact' className='tab-pane tab fade'>
             <div id="chat" style={{display: display}}>
-                <ContactsList setContact={setContact}/>
-                <Chat contact={contact}/>
+                <ContactsList setContact={setContact} globalContacts={globalContacts}/>
+                <Chat contact={contact} setGlobalContacts={setGlobalContacts}/>
             </div>
         </div>
     );

@@ -3,7 +3,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import '/src/style/adminpanel/messenger/chat.scss';
 
-function Chat({ contact }) {
+function Chat({ contact, setGlobalContacts }) {
     const [messages, setMessages] = useState([]);
     const [messageInput, setMessageInput] = useState('');
     const [sid, setSid] = useState(null);
@@ -22,6 +22,11 @@ function Chat({ contact }) {
             } else {
                 message.received = true;
                 setMessages(prevMessages => [...prevMessages, message]);
+                
+                axios.get('http://localhost:8080/tours/adminpanel/messenger')
+                    .then(response => {
+                        setGlobalContacts(response.data.sort((a, b) => a.position - b.position));
+                    });
 
                 if (document.visibilityState === 'hidden') {
                     const notificationSound = new Audio('/sounds/notification-sound.wav');

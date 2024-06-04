@@ -3,21 +3,22 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types'; // Add PropTypes for prop validation
 import '/src/style/adminpanel/messenger/contactsList.scss';
 
-function ContactsList({ setContact }) {
+function ContactsList({ setContact, globalContacts }) {
     const [contacts, setContacts] = useState([]);
 
-    const fetchContacts = () => {
+    useEffect(() => {
         axios.get('http://localhost:8080/tours/adminpanel/messenger')
             .then(response => {
                 setContacts(response.data.sort((a, b) => a.position - b.position));
             });
-    };
+    }, []);
 
     useEffect(() => {
-        fetchContacts();
-        const intervalId = setInterval(fetchContacts, 30000);
-        return () => clearInterval(intervalId);
-    }, []);
+        if(globalContacts !== undefined){
+            setContacts(globalContacts);
+            console.log(true);
+        }
+    }, [globalContacts]);
 
     const deleteContact = (contactEmail) => {
         axios.delete(`http://localhost:8080/tours/adminpanel/messenger?email=${contactEmail}`)
