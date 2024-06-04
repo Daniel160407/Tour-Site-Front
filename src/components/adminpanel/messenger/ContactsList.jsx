@@ -1,15 +1,15 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types'; // Add PropTypes for prop validation
 import '/src/style/adminpanel/messenger/contactsList.scss';
 
-// eslint-disable-next-line react/prop-types
 function ContactsList({ setContact }) {
     const [contacts, setContacts] = useState([]);
 
     const fetchContacts = () => {
         axios.get('http://localhost:8080/tours/adminpanel/messenger')
             .then(response => {
-                setContacts(response.data);
+                setContacts(response.data.sort((a, b) => a.position - b.position));
             });
     };
 
@@ -22,7 +22,7 @@ function ContactsList({ setContact }) {
     const deleteContact = (contactEmail) => {
         axios.delete(`http://localhost:8080/tours/adminpanel/messenger?email=${contactEmail}`)
             .then(response => {
-                setContacts(response.data);
+                setContacts(response.data.sort((a, b) => a.position - b.position));
             });
     };
 
@@ -42,5 +42,9 @@ function ContactsList({ setContact }) {
         </div>
     );
 }
+
+ContactsList.propTypes = {
+    setContact: PropTypes.func.isRequired,
+};
 
 export default ContactsList;

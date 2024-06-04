@@ -15,7 +15,8 @@ function LogIn({ sid, onLogin, setGlobalEmail }) {
             name: name,
             email: email,
             password: password,
-            sid: sid
+            sid: sid,
+            position: 1
         };
 
         axios.post('http://localhost:8080/tours/messenger/login', user)
@@ -52,7 +53,7 @@ function LogIn({ sid, onLogin, setGlobalEmail }) {
                     onChange={(e) => setPassword(e.target.value)}
                     required
                 />
-                <button className="log-in-button" type="submit">Save</button>
+                <button className="log-in-button" type="submit">Go to Chat</button>
             </form>
             <div className="socialNetwork">
                 <a href="https://www.facebook.com/goga.abulashvili" target="_blank"><img src="/svg/facebook.svg" alt={'facebook'}></img></a>
