@@ -16,7 +16,6 @@ function ContactsList({ setContact, globalContacts }) {
     useEffect(() => {
         if(globalContacts !== undefined){
             setContacts(globalContacts);
-            console.log(true);
         }
     }, [globalContacts]);
 
