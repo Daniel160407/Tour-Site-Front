@@ -11,10 +11,15 @@ function LogIn({ sid, onLogin, setGlobalEmail }) {
     const [showError, setShowError] = useState(false);
 
     useEffect(() => {
-        if (name !== '' && email !== '' && password !== '') {
-            handleLogin('Enter');
+        if (sid !== '' && name !== '' && email !== '' && password !== '') {
+            axios.get(`http://localhost:8080/tours/users?email=${email}`)
+                .then(response => {
+                    if(response.status === 200){
+                        handleLogin('Enter');
+                    }
+                });
         }
-    }, []);
+    }, [sid]);
 
     function handleLogin(event) {
         if (event.key === 'Enter' || event === 'Enter') {
