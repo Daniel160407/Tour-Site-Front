@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import LogIn from "./LogIn";
+import Cookies from 'js-cookie';
 import '/src/style/messenger/chatEndPoint.scss';
 import axios from "axios";
 
@@ -75,6 +76,13 @@ function ChatEndPoint() {
         }
     }
 
+    const onLogout = () => {
+        Cookies.remove('username');
+        Cookies.remove('userEmail');
+        Cookies.remove('userPassword');
+        setShowLogin(true);
+    }
+
     return (
         <>
             {showLogin && (
@@ -82,6 +90,9 @@ function ChatEndPoint() {
             )}
             {!showLogin && (
                 <div className="chat-container">
+                    <div className="logout-button-container">
+                        <button className="logout-button" onClick={onLogout}>Log Out</button>
+                    </div>
                     <div className='messages-container'>
                         {messages.map((msg, index) => (
                             msg.received ? (

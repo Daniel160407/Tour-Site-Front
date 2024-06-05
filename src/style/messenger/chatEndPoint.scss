@@ -8,6 +8,7 @@
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     overflow: hidden;
+    position: relative;
 
     @media (max-width: 768px) {
         height: 100vh;
@@ -60,6 +61,34 @@
                 padding: 6px;
                 font-size: 0.875rem;
                 margin-top: 5px;
+            }
+        }
+    }
+
+    .logout-button-container {
+        display: flex;
+        justify-content: end;
+
+        .logout-button {
+            padding: 10px 20px;
+            background-color: #ff4d4d;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+
+            &:hover {
+                background-color: #ff1a1a;
+            }
+
+            &:focus {
+                outline: none;
+            }
+
+            &:active {
+                background-color: #e60000;
             }
         }
     }
