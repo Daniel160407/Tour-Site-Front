@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, {useEffect, useState, useRef} from "react";
 import LogIn from "./LogIn";
 import Cookies from 'js-cookie';
 import '/src/style/messenger/chatEndPoint.scss';
@@ -14,7 +14,7 @@ function ChatEndPoint() {
     const messagesEndRef = useRef(null);
 
     useEffect(() => {
-        const newSocket = new WebSocket('ws://localhost:8080/messenger');
+        const newSocket = new WebSocket(`ws://localhost:8080/messenger`);
         setSocket(newSocket);
 
         newSocket.onmessage = function (event) {
@@ -35,7 +35,11 @@ function ChatEndPoint() {
 
     useEffect(() => {
         if (!showLogin) {
-            axios.get(`http://localhost:8080/tours/adminpanel/messenger/messages?email=${email}`)
+            axios.get(`http://localhost:8080/tours/adminpanel/messenger/messages?email=${email}`, {
+                headers: {
+                    'Authorization': `${Cookies.get('token') ? Cookies.get('token') : null}`
+                }
+            })
                 .then(response => {
                     const messages = response.data;
                     setMessages([]);
@@ -49,7 +53,7 @@ function ChatEndPoint() {
 
     useEffect(() => {
         if (messagesEndRef.current) {
-            messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+            messagesEndRef.current.scrollIntoView({behavior: 'smooth'});
         }
     }, [messages]);
 
@@ -86,7 +90,7 @@ function ChatEndPoint() {
     return (
         <>
             {showLogin && (
-                <LogIn sid={sid} onLogin={() => setShowLogin(false)} setGlobalEmail={setEmail} />
+                <LogIn sid={sid} onLogin={() => setShowLogin(false)} setGlobalEmail={setEmail}/>
             )}
             {!showLogin && (
                 <div className="chat-container">
@@ -109,7 +113,7 @@ function ChatEndPoint() {
                                 </div>
                             )
                         ))}
-                        <div ref={messagesEndRef} />
+                        <div ref={messagesEndRef}/>
                     </div>
                     <div className="input-container">
                         <input

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import '/src/style/adminpanel/login.scss';
@@ -7,6 +7,7 @@ import AdminPanelApp from './AdminPanelApp';
 
 function LogIn() {
     const [showError, setShowError] = useState(false);
+    const token = useRef(Cookies.get('token'));
 
     useEffect(() => {
         const email = Cookies.get('email');
@@ -29,6 +30,9 @@ function LogIn() {
                 email: email,
                 password: password
             }
+
+            console.log(token);
+
             axios.post('http://localhost:8080/tours/adminpanel/login', admin)
             .then(response => {
                 if(response.status === 200){
@@ -36,6 +40,9 @@ function LogIn() {
                         Cookies.set('email', email, {expires: 1});
                         Cookies.set('password', password, {expires: 1});
                     }
+
+                    console.log(response.headers.get('Authorization'));
+                    Cookies.set('token', response.headers.get('Authorization'), {expires: 1});
 
                     root.render(
                         <AdminPanelApp/>

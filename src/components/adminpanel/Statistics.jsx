@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import Cookies from 'js-cookie';
 import '../../style/adminpanel/statistics.scss';
 
 const Statistics = () => {
@@ -12,7 +13,11 @@ const Statistics = () => {
 
     useEffect(() => {
         const fetchData = () => {
-            axios.get('http://localhost:8080/statistics')
+            axios.get('http://localhost:8080/statistics', {
+                headers: {
+                    'Authorization': `${Cookies.get('token') ? Cookies.get('token') : null}`
+                }
+            })
                 .then(response => {
                     const data = response.data;
                     setTime(data.time);
@@ -23,7 +28,11 @@ const Statistics = () => {
                 })
                 .catch(error => console.error('Error fetching statistics:', error));
 
-            axios.get('http://localhost:8080/statistics/countries')
+            axios.get('http://localhost:8080/statistics/countries', {
+                headers: {
+                    'Authorization': `${Cookies.get('token') ? Cookies.get('token') : null}`
+                }
+            })
                 .then(response => {
                     const countryData = response.data || [];
                     if (Array.isArray(countryData)) {
@@ -55,7 +64,11 @@ const Statistics = () => {
     }, []);
 
     const clearState = (state) => {
-        axios.delete(`http://localhost:8080/statistics?statistic=${state}`)
+        axios.delete(`http://localhost:8080/statistics?statistic=${state}`, {
+            headers: {
+                'Authorization': `${Cookies.get('token') ? Cookies.get('token') : null}`
+            }
+        })
         .then(response => {
             const data = response.data;
             setTime(data.time);
@@ -68,7 +81,11 @@ const Statistics = () => {
     }
 
     const clearCountries = () => {
-        axios.delete('http://localhost:8080/statistics/countries');
+        axios.delete('http://localhost:8080/statistics/countries', {
+            headers: {
+                'Authorization': `${Cookies.get('token') ? Cookies.get('token') : null}`
+            }
+        });
         setCountryStats([]);
     }
 

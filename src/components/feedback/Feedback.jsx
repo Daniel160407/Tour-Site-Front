@@ -1,5 +1,6 @@
 import axios from "axios";
 import {useEffect, useState} from "react";
+import Cookies from 'js-cookie';
 import '../../style/feedback/feedback.scss';
 
 // eslint-disable-next-line react/prop-types
@@ -7,7 +8,11 @@ function Feedback({adminMode}) {
     const [feedbacks, setFeedbacks] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:8080/tours/feedback')
+        axios.get('http://localhost:8080/tours/feedback', {
+            headers: {
+                'Authorization': `${Cookies.get('token') ? Cookies.get('token') : null}`
+            }
+        })
             .then(response => {
                 const data = response.data;
                 setFeedbacks([]);
@@ -31,7 +36,11 @@ function Feedback({adminMode}) {
             commentator.value = '';
             comment.value = '';
 
-            axios.post('http://localhost:8080/tours/feedback', feedback)
+            axios.post('http://localhost:8080/tours/feedback', feedback, {
+                headers: {
+                    'Authorization': `${Cookies.get('token') ? Cookies.get('token') : null}`
+                }
+            })
                 .then(response => {
                     const data = response.data;
                     setFeedbacks([]);
@@ -44,7 +53,11 @@ function Feedback({adminMode}) {
     }
 
     const deleteFeedback = (comment) => {
-        axios.delete(`http://localhost:8080/tours/feedback?comment=${comment}`)
+        axios.delete(`http://localhost:8080/tours/feedback?comment=${comment}`, {
+            headers: {
+                'Authorization': `${Cookies.get('token') ? Cookies.get('token') : null}`
+            }
+        })
             .then(response => {
                 const data = response.data;
                 setFeedbacks([]);

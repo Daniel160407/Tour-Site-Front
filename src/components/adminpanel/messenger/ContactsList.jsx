@@ -2,12 +2,17 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types'; // Add PropTypes for prop validation
 import '/src/style/adminpanel/messenger/contactsList.scss';
+import Cookies from "js-cookie";
 
 function ContactsList({ setContact, globalContacts }) {
     const [contacts, setContacts] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:8080/tours/adminpanel/messenger')
+        axios.get('http://localhost:8080/tours/adminpanel/messenger', {
+            headers: {
+                'Authorization': `${Cookies.get('token') ? Cookies.get('token') : null}`
+            }
+        })
             .then(response => {
                 setContacts(response.data.sort((a, b) => a.position - b.position));
             });
@@ -20,7 +25,11 @@ function ContactsList({ setContact, globalContacts }) {
     }, [globalContacts]);
 
     const deleteContact = (contactEmail) => {
-        axios.delete(`http://localhost:8080/tours/adminpanel/messenger?email=${contactEmail}`)
+        axios.delete(`http://localhost:8080/tours/adminpanel/messenger?email=${contactEmail}`, {
+            headers: {
+                'Authorization': `${Cookies.get('token') ? Cookies.get('token') : null}`
+            }
+        })
             .then(response => {
                 setContacts(response.data.sort((a, b) => a.position - b.position));
             });

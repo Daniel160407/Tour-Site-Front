@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import axios from "axios";
+import Cookies from 'js-cookie';
 import '/src/style/adminpanel/tour/EditTourForm.scss';
 
 // eslint-disable-next-line react/prop-types
@@ -19,12 +20,20 @@ function EditTourForm({tour, exit}) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.put(`http://localhost:8080/tours/adminpanel`, editedTour)
+        axios.put(`http://localhost:8080/tours/adminpanel`, editedTour, {
+            headers: {
+                'Authorization': `${Cookies.get('token') ? Cookies.get('token') : null}`
+            }
+        })
         .then(() => exit());
     };
 
     function deleteTour() {
-        axios.delete(`http://localhost:8080/tours/adminpanel?name=${editedTour.name}`)
+        axios.delete(`http://localhost:8080/tours/adminpanel?name=${editedTour.name}`, {
+            headers: {
+                'Authorization': `${Cookies.get('token') ? Cookies.get('token') : null}`
+            }
+        })
         .then(() => exit());
     }
 

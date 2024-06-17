@@ -12,7 +12,11 @@ function LogIn({ sid, onLogin, setGlobalEmail }) {
 
     useEffect(() => {
         if (sid !== '' && name !== '' && email !== '' && password !== '') {
-            axios.get(`http://localhost:8080/tours/users?email=${email}`)
+            axios.get(`http://localhost:8080/tours/users?email=${email}`, {
+                headers: {
+                    'Authorization': `${Cookies.get('token') ? Cookies.get('token') : null}`
+                }
+            })
                 .then(response => {
                     if(response.status === 200){
                         handleLogin('Enter');
@@ -31,7 +35,11 @@ function LogIn({ sid, onLogin, setGlobalEmail }) {
                 position: 1
             };
 
-            axios.post('http://localhost:8080/tours/messenger/login', user)
+            axios.post('http://localhost:8080/tours/messenger/login', user, {
+                headers: {
+                    'Authorization': `${Cookies.get('token') ? Cookies.get('token') : null}`
+                }
+            })
                 .then(response => {
                     if (response.status === 202) {
                         Cookies.set('username', name, { expires: 1 });

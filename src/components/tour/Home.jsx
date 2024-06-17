@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import '../../style/tour/home.scss';
 import Tour from "../Tour";
+import Cookies from 'js-cookie';
 import EditTourForm from "../adminpanel/tour/EditTourForm";
 import AddTour from "../adminpanel/tour/AddTour";
 
@@ -18,6 +19,11 @@ function Home({adminMode, searchText}) {
 
     useEffect(() => {
         if (!adminMode) {
+            axios.get('http://localhost:8080/tours/tour/token')
+            .then(response => {
+                Cookies.set('token', response.headers.get('Authorization'));
+            });
+
             axios.get('https://ipinfo.io/json?token=d2261c6bcf22ce')
                 .then(response => {                    
                     const userCountry = {
@@ -25,13 +31,21 @@ function Home({adminMode, searchText}) {
                         country: response.data.country
                     }
 
-                    axios.post(`http://localhost:8080/statistics`, userCountry);
+                    axios.post(`http://localhost:8080/statistics`, userCountry, {
+                        headers: {
+                            'Authorization': `${Cookies.get('token') ? Cookies.get('token') : null}`
+                        }
+                    });
                 });
                 
             const handleBeforeUnload = () => {
                 const endTime = Date.now();
                 const duration = ((endTime - startTime.current) / 1000 / 60).toFixed(2);
-                axios.put(`http://localhost:8080/statistics?time=${duration}&clicks=${clicks.current}`);
+                axios.put(`http://localhost:8080/statistics?time=${duration}&clicks=${clicks.current}`, {
+                    headers: {
+                        'Authorization': `${Cookies.get('token') ? Cookies.get('token') : null}`
+                    }
+                });
             };
 
             window.addEventListener('beforeunload', handleBeforeUnload);
@@ -44,7 +58,11 @@ function Home({adminMode, searchText}) {
 
     useEffect(() => {
         if (language && showTour) {
-            axios.get(`http://localhost:8080/tours/tour?language=${language}`)
+            axios.get(`http://localhost:8080/tours/tour?language=${language}`, {
+                headers: {
+                    'Authorization': `${Cookies.get('token') ? Cookies.get('token') : null}`
+                }
+            })
                 .then(response => {
                     const toursWithImages = response.data.tours.map(tour => ({
                         ...tour,
@@ -60,7 +78,11 @@ function Home({adminMode, searchText}) {
 
     useEffect(() => {
         if (searchText !== undefined) {
-            axios.get(`http://localhost:8080/tours/tour/search?prefix=${searchText}`)
+            axios.get(`http://localhost:8080/tours/tour/search?prefix=${searchText}`, {
+                headers: {
+                    'Authorization': `${Cookies.get('token') ? Cookies.get('token') : null}`
+                }
+            })
                 .then(response => {
                     if (response !== undefined) {
                         const toursWithImages = response.data.tours.map(tour => ({

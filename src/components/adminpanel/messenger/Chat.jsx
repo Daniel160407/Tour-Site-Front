@@ -1,6 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 import '/src/style/adminpanel/messenger/chat.scss';
 
 function Chat({ contact, setGlobalContacts }) {
@@ -12,7 +13,7 @@ function Chat({ contact, setGlobalContacts }) {
     const messagesEndRef = useRef(null);
 
     useEffect(() => {
-        const newSocket = new WebSocket('ws://localhost:8080/messenger');
+        const newSocket = new WebSocket(`ws://localhost:8080/messenger`);
         setSocket(newSocket);
 
         newSocket.onmessage = function (event) {
@@ -23,7 +24,11 @@ function Chat({ contact, setGlobalContacts }) {
                 message.received = true;
                 setMessages(prevMessages => [...prevMessages, message]);
                 
-                axios.get('http://localhost:8080/tours/adminpanel/messenger')
+                axios.get('http://localhost:8080/tours/adminpanel/messenger', {
+                    headers: {
+                        'Authorization': `${Cookies.get('token') ? Cookies.get('token') : null}`
+                    }
+                })
                     .then(response => {
                         setGlobalContacts(response.data.sort((a, b) => a.position - b.position));
                     });
@@ -34,6 +39,10 @@ function Chat({ contact, setGlobalContacts }) {
                 }
             }
         };
+
+        newSocket.onerror = function(error){
+            console.log(error);
+        }
 
         return () => {
             newSocket.close();
@@ -49,14 +58,22 @@ function Chat({ contact, setGlobalContacts }) {
                 sid: sid
             };
 
-            axios.post('http://localhost:8080/tours/messenger/login', user);
+            axios.post('http://localhost:8080/tours/messenger/login', user, {
+                headers: {
+                    'Authorization': `${Cookies.get('token') ? Cookies.get('token') : null}`
+                }
+            });
         }
     }, [sid]);
 
     useEffect(() => {
         if (contact !== null) {
             setShowChat(true);
-            axios.get(`http://localhost:8080/tours/adminpanel/messenger/messages?email=${contact.email}`)
+            axios.get(`http://localhost:8080/tours/adminpanel/messenger/messages?email=${contact.email}`, {
+                headers: {
+                    'Authorization': `${Cookies.get('token') ? Cookies.get('token') : null}`
+                }
+            })
                 .then(response => {
                     const messages = response.data;
                     setMessages([]);
