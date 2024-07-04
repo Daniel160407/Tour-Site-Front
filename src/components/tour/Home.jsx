@@ -19,11 +19,6 @@ function Home({adminMode, searchText}) {
 
     useEffect(() => {
         if (!adminMode) {
-            axios.get('http://localhost:8080/tours/tour/token')
-            .then(response => {
-                Cookies.set('token', response.headers.get('Authorization'));
-            });
-
             axios.get('https://ipinfo.io/json?token=d2261c6bcf22ce')
                 .then(response => {                    
                     const userCountry = {

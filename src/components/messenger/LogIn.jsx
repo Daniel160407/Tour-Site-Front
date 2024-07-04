@@ -59,6 +59,7 @@ function LogIn({ sid, onLogin, setGlobalEmail }) {
 
     return (
         <div className="log-in-container">
+            <h2>Introduce yourself and start a chat</h2>
             <form onSubmit={(e) => { e.preventDefault(); handleLogin('Enter'); }}>
                 <input
                     className="log-in-input"
@@ -96,6 +97,8 @@ function LogIn({ sid, onLogin, setGlobalEmail }) {
                 <button className="log-in-button" type="submit">Go to Chat</button>
             </form>
             <div className="socialNetwork">
+                <p>Phone: +995 593 340 874</p>
+                <p>Available on Whatsapp and Viber</p>
                 <a href="https://www.facebook.com/goga.abulashvili" target="_blank" rel="noopener noreferrer">
                     <img src="/svg/facebook.svg" alt="facebook" />
                 </a>

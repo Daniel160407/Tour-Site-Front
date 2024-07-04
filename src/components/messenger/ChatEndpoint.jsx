@@ -119,7 +119,7 @@ function ChatEndPoint() {
                         <input
                             id='messageInput'
                             type='text'
-                            placeholder='Tipe something'
+                            placeholder='Type something'
                             onChange={(e) => setMessageInput(e.target.value)}
                             onKeyPress={handleKeyPress}></input>
                     </div>
