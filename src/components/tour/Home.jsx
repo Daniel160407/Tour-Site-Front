@@ -18,6 +18,22 @@ function Home({adminMode, searchText}) {
     const clicks = useRef(0);
 
     useEffect(() => {
+        axios.get(`http://localhost:8080/tours/tour?language=${language}`, {
+            headers: {
+                'Authorization': `${Cookies.get('token') ? Cookies.get('token') : null}`
+            }
+        })
+            .then(response => {
+                const toursWithImages = response.data.tours.map(tour => ({
+                    ...tour,
+                    imageData: tour.imageData
+                }));
+                setTours(toursWithImages);
+                if (toursWithImages.length !== 0) {
+                    setRandomTour(Math.floor(Math.random() * toursWithImages.length));
+                }
+            });
+
         if (!adminMode) {
             axios.get('https://ipinfo.io/json?token=d2261c6bcf22ce')
                 .then(response => {                    
@@ -102,6 +118,7 @@ function Home({adminMode, searchText}) {
     function exitTour() {
         setSelectedTour(null);
         setShowTour(true);
+        setAddTour(false);
     }
 
     function addNewTour() {
@@ -185,7 +202,7 @@ function Home({adminMode, searchText}) {
                 </>
             )}
             {addTour && (
-                <AddTour/>
+                <AddTour exit={exitTour}/>
             )}
             {selectedTour && !adminMode && (
                 <Tour tour={selectedTour} language={language} exit={exitTour}/>

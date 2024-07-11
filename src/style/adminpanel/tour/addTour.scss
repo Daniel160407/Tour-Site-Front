@@ -78,4 +78,32 @@
       background-color: #f0f0f0;
     }
     }
+
+    #addImagesButton {
+      display: inline-block;
+  padding: 10px 20px;
+  margin-left: 10px;
+  background-color: #4caf50;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #408a42;
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.5);
+  }
+
+  &:active {
+    transform: translateY(1px);
+  }
+    }
   }

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 import '/src/style/adminpanel/tour/addTour.scss';
-import Home from '../../tour/Home.jsx';
 
-function AddTour() {
+function AddTour({exit}) {
     const [title, setTitle] = useState('');
     const [direction, setDirection] = useState('');
     const [description, setDescription] = useState('');
@@ -13,7 +13,7 @@ function AddTour() {
     const [price, setPrice] = useState('');
     const [language, setLanguage] = useState('ENG');
     const [image, setImage] = useState(null);
-    const [addNewTour, setAddNewTour] = useState(true);
+    const [images, setImages] = useState([]);
 
     const [descriptionSize, setDescriptionSize] = useState(1000);
     const [historySize, setHistorySize] = useState(1000);
@@ -31,36 +31,55 @@ function AddTour() {
         formData.append('price', price);
         formData.append('language', language);
         formData.append('image', image);
+        console.log(formData.get('image'))
 
         axios.post('http://localhost:8080/tours/adminpanel', formData, {
             headers: {
-                'Content-Type': 'multipart/form-data'
+                'Content-Type': 'multipart/form-data',
+                'Authorization': `${Cookies.get('token') ? Cookies.get('token') : null}`
             }
-        });
+        })
+            .then(() => {
+                const inputs = document.getElementsByClassName('inputs');
+                for (let i = 0; i < inputs.length; i++) {
+                inputs[i].value = '';
+            }
 
-        const inputs = document.getElementsByClassName('inputs');
-        for (let i = 0; i < inputs.length; i++) {
-            inputs[i].value = '';
-        }
-
-        setAddNewTour(false);
+            exit(true);
+        })       
     }
 
     function handleImageChange(event) {
         setImage(event.target.files[0]);
     }
 
+    const handleAddImagesChange = (e) => {
+        setImages(e.target.files);
+    }
+
+    const onAddImagesClick = () => {
+        const formData = new FormData();
+        for(let i = 0; i < images.length; i++){
+            formData.append('images', images[i]);
+        }
+
+        console.log(formData.get('images'));
+        axios.post('http://localhost:8080/tours/adminpanel/images', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                'Authorization': `${Cookies.get('token') ? Cookies.get('token') : null}`
+            }
+        })
+        .then(response => {
+            console.log(response.status);
+        })
+    }
+
     return (
         <>
-        {!addNewTour && (
-            <>
-                <Home adminMode={true}/>
-            </>
-        )}
-        {addNewTour && (
             <div id='addTours'>
             <img id='arrow' src='/svg/arrow.svg' onClick={() => {
-                setAddNewTour(false)
+                exit(true)
             }}></img>
             <h1>Add Tour</h1>
             <form onSubmit={saveTour}>
@@ -97,10 +116,11 @@ function AddTour() {
                     <option>RUS</option>
                 </select>
                 <input className='inputs' type='file' onChange={handleImageChange} required></input>
+                <input className='inputs' type="file" id="imagesInput" name="files[]" onChange={handleAddImagesChange} multiple></input>
+                <button id='addImagesButton' onClick={onAddImagesClick}>Add Images</button>
                 <input type='submit' value='Save'></input>
             </form>
         </div>
-        )}
         </>
         
     );
