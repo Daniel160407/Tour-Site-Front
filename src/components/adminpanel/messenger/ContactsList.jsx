@@ -19,7 +19,7 @@ function ContactsList({ setContact, globalContacts }) {
     }, []);
 
     useEffect(() => {
-        if(globalContacts !== undefined){
+        if (globalContacts !== undefined) {
             setContacts(globalContacts);
         }
     }, [globalContacts]);
@@ -35,11 +35,19 @@ function ContactsList({ setContact, globalContacts }) {
             });
     };
 
+    const handleContactClick = (contact) => {
+        setContact(contact);
+
+        const contactNames = document.getElementById(contact.email);
+        contactNames.style.fontWeight = 'normal';
+        document.title = 'Georgia & Tours';
+    };
+
     return (
         <div className="contacts-list">
             {contacts.map(contact => (
-                <div className='contact' key={contact.name} onClick={() => setContact(contact)}>
-                    <p>{contact.name}</p>
+                <div className='contact' key={contact.name} onClick={() => handleContactClick(contact)}>
+                    <p id={contact.email}>{contact.name}</p>
                     <div className='delete'>
                         <img src='/svg/trash.svg' alt='delete' onClick={(e) => {
                             e.stopPropagation();
@@ -54,6 +62,7 @@ function ContactsList({ setContact, globalContacts }) {
 
 ContactsList.propTypes = {
     setContact: PropTypes.func.isRequired,
+    globalContacts: PropTypes.array,
 };
 
 export default ContactsList;

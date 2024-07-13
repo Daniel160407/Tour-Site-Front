@@ -32,6 +32,9 @@ function Chat({ contact, setGlobalContacts }) {
                         setGlobalContacts(response.data.sort((a, b) => a.position - b.position));
                     });
 
+                document.getElementById(message.senderEmail).style.fontWeight = '1000';
+                document.title = '(1) Message';
+                
                 if (document.visibilityState === 'hidden') {
                     const notificationSound = new Audio('/sounds/notification-sound.wav');
                     notificationSound.play();
@@ -130,14 +133,18 @@ function Chat({ contact, setGlobalContacts }) {
                     </div>
                     <div className='messages-container'>
                         {messages.map((message, index) => (
-                            <div key={index}>
-                                <p className="date">{index === 0 || message.time !== messages[index - 1].time ? message.time : ''}</p>
-                                <div className={message.received ? "received" : "sent"}>
-                                    <div className="message">
-                                        <p>{message.message}</p>
+                            <>
+                                {(contact.email === message.receiverEmail || contact.email === message.senderEmail) && (
+                                    <div key={index}>
+                                        <p className="date">{index === 0 || message.time !== messages[index - 1].time ? message.time : ''}</p>
+                                        <div className={message.received ? "received" : "sent"}>
+                                            <div className="message">
+                                                <p>{message.message}</p>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
+                                )}
+                            </>
                         ))}
                         <div ref={messagesEndRef} />
                     </div>
