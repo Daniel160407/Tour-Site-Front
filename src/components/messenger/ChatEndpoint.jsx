@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef} from "react";
+import React, { useEffect, useState, useRef } from "react";
 import LogIn from "./LogIn";
 import Cookies from 'js-cookie';
 import '/src/style/messenger/chatEndPoint.scss';
@@ -30,7 +30,11 @@ function ChatEndPoint() {
                     notificationSound.play();
                 }
             }
-        }
+        };
+
+        return () => {
+            newSocket.close();
+        };
     }, []);
 
     useEffect(() => {
@@ -53,17 +57,24 @@ function ChatEndPoint() {
 
     useEffect(() => {
         if (messagesEndRef.current) {
-            messagesEndRef.current.scrollIntoView({behavior: 'smooth'});
+            messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
         }
     }, [messages]);
 
     const sendMessage = () => {
+        const date = new Date();
+        const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        const day = days[date.getDay()];
+
+        const time = `${day} ${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
+
         const message = {
             senderEmail: email,
             receiverEmail: '',
             sender: sid,
             receiver: 'Admin',
-            message: messageInput
+            message: messageInput,
+            time: time
         };
 
         socket.send(JSON.stringify(message));
@@ -71,57 +82,52 @@ function ChatEndPoint() {
         message.received = false;
         setMessages(prevMessages => [...prevMessages, message]);
         setMessageInput('');
-        document.getElementById('messageInput').value = '';
     };
 
     const handleKeyPress = (event) => {
-        if (event.key === 'Enter' && event.target.value !== '') {
+        if (event.key === 'Enter' && messageInput.trim() !== '') {
             sendMessage();
         }
-    }
+    };
 
     const onLogout = () => {
         Cookies.remove('username');
         Cookies.remove('userEmail');
         Cookies.remove('userPassword');
         setShowLogin(true);
-    }
+    };
 
     return (
         <>
-            {showLogin && (
-                <LogIn sid={sid} onLogin={() => setShowLogin(false)} setGlobalEmail={setEmail}/>
-            )}
-            {!showLogin && (
+            {showLogin ? (
+                <LogIn sid={sid} onLogin={() => setShowLogin(false)} setGlobalEmail={setEmail} />
+            ) : (
                 <div className="chat-container">
                     <div className="logout-button-container">
                         <button className="logout-button" onClick={onLogout}>Log Out</button>
                     </div>
                     <div className='messages-container'>
                         {messages.map((msg, index) => (
-                            msg.received ? (
-                                <div className="received" key={index}>
+                            <div key={index}>
+                                <p className="date">{index === 0 || msg.time !== messages[index - 1].time ? msg.time : ''}</p>
+                                <div className={msg.received ? "received" : "sent"}>
                                     <div className="message">
                                         <p>{msg.message}</p>
                                     </div>
                                 </div>
-                            ) : (
-                                <div className="sent" key={index}>
-                                    <div className="message">
-                                        <p>{msg.message}</p>
-                                    </div>
-                                </div>
-                            )
+                            </div>
                         ))}
-                        <div ref={messagesEndRef}/>
+                        <div ref={messagesEndRef} />
                     </div>
                     <div className="input-container">
                         <input
                             id='messageInput'
                             type='text'
                             placeholder='Type something'
+                            value={messageInput}
                             onChange={(e) => setMessageInput(e.target.value)}
-                            onKeyPress={handleKeyPress}></input>
+                            onKeyPress={handleKeyPress}
+                        />
                     </div>
                 </div>
             )}

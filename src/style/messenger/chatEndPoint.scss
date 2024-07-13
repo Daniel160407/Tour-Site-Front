@@ -21,11 +21,15 @@
         scroll-behavior: smooth;
         margin-bottom: 10px;
 
+        .date {
+            text-align: center;
+            padding: 0;
+        }
+
         .message {
             max-width: 70%;
             padding: 8px 12px;
             border-radius: 8px;
-            margin: 5px 0;
             background-color: rgba(128, 128, 128, 0.5);
             box-sizing: border-box;
             word-wrap: break-word;

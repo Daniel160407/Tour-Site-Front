@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-unused-vars
 import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
@@ -23,7 +22,7 @@ function Chat({ contact, setGlobalContacts }) {
             } else {
                 message.received = true;
                 setMessages(prevMessages => [...prevMessages, message]);
-                
+
                 axios.get('http://localhost:8080/tours/adminpanel/messenger', {
                     headers: {
                         'Authorization': `${Cookies.get('token') ? Cookies.get('token') : null}`
@@ -40,7 +39,7 @@ function Chat({ contact, setGlobalContacts }) {
             }
         };
 
-        newSocket.onerror = function(error){
+        newSocket.onerror = function (error) {
             console.log(error);
         }
 
@@ -94,24 +93,30 @@ function Chat({ contact, setGlobalContacts }) {
     };
 
     const sendMessage = () => {
+        const date = new Date();
+        const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        const day = days[date.getDay()];
+
+        const time = `${day} ${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
+
         const message = {
             senderEmail: '',
             receiverEmail: contact.email,
             sender: 'Admin',
             receiver: contact.sid,
-            message: messageInput
+            message: messageInput,
+            time: time
         };
 
-        setMessageInput('');
-        document.getElementById('messageInput').value = '';
         socket.send(JSON.stringify(message));
 
         message.received = false;
         setMessages(prevMessages => [...prevMessages, message]);
+        setMessageInput('');
     };
 
     const handleKeyPress = (event) => {
-        if (event.key === 'Enter') {
+        if (event.key === 'Enter' && messageInput.trim() !== '') {
             sendMessage();
         }
     };
@@ -125,19 +130,14 @@ function Chat({ contact, setGlobalContacts }) {
                     </div>
                     <div className='messages-container'>
                         {messages.map((message, index) => (
-                            contact.email === message.senderEmail && message.received ? (
-                                <div className="received" key={index}>
+                            <div key={index}>
+                                <p className="date">{index === 0 || message.time !== messages[index - 1].time ? message.time : ''}</p>
+                                <div className={message.received ? "received" : "sent"}>
                                     <div className="message">
                                         <p>{message.message}</p>
                                     </div>
                                 </div>
-                            ) : !message.received ? (
-                                <div className="sent" key={index}>
-                                    <div className="message">
-                                        <p>{message.message}</p>
-                                    </div>
-                                </div>
-                            ) : null
+                            </div>
                         ))}
                         <div ref={messagesEndRef} />
                     </div>
@@ -146,14 +146,14 @@ function Chat({ contact, setGlobalContacts }) {
                             id='messageInput'
                             type='text'
                             placeholder='Type something'
+                            value={messageInput}
                             onChange={(e) => setMessageInput(e.target.value)}
-                            onKeyPress={handleKeyPress}></input>
+                            onKeyPress={handleKeyPress}
+                        />
                     </div>
                 </div>
             )}
-
         </>
-
     );
 }
 
